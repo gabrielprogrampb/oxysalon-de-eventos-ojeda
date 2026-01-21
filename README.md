@@ -32,11 +32,7 @@ El sitio ha sido desarrollado con tecnologías modernas para ofrecer una experie
     ```bash
     npm install
     ```
-3.  **Configurar variables de entorno:**
-    Crea o edita el archivo `.env.local`
-    ```env
-    ```
-4.  **Iniciar el servidor de desarrollo:**
+3.  **Iniciar el servidor de desarrollo:**
     ```bash
     npm run dev
     ```
