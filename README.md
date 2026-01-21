@@ -1,7 +1,5 @@
 # Oxysalon de Eventos Ojeda - Sitio Web Oficial
 
-![Banner de Oxysalon](https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6)
-
 ## 🏢 Sobre el Proyecto
 Este es el sitio web oficial de **Oxysalon**, un salón de eventos premium diseñado para ofrecer experiencias inolvidables. La plataforma permite a los clientes explorar nuestros espacios, conocer nuestros servicios exclusivos y realizar consultas o reservas de manera sencilla.
 
