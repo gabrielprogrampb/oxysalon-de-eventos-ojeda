@@ -1,20 +1,45 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Oxysalon de Eventos Ojeda - Sitio Web Oficial
 
-# Run and deploy your AI Studio app
+## 🏢 Sobre el Proyecto
+Este es el sitio web oficial de **Oxysalon**, un salón de eventos premium diseñado para ofrecer experiencias inolvidables. La plataforma permite a los clientes explorar nuestros espacios, conocer nuestros servicios exclusivos y realizar consultas o reservas de manera sencilla.
 
-This contains everything you need to run your app locally.
+## 🌐 Funcionalidades del Sitio Web
+El sitio ha sido desarrollado con tecnologías modernas para ofrecer una experiencia fluida y profesional:
 
-View your app in AI Studio: https://ai.studio/apps/drive/1AEoy1VAJcCKyyWuIFPHiQv9PzhKFFaSi
+- **Sistema de Reservas y Consultas:** Los usuarios pueden solicitar presupuestos y verificar disponibilidad directamente.
+- **Galería Interactiva:** Visualiza montajes de bodas, cenas de gala y detalles florales en alta resolución.
+- **Dashboard Administrativo:** Herramienta privada para la gestión del negocio:
+  - Manejo de finanzas e ingresos/egresos.
+  - Gestión de solicitudes y contactos (inquiries).
+  - Administración de la galería de imágenes.
+- **Calendario de Eventos:** Vista organizada de las fechas reservadas y disponibles.
+- **Diseño Premium:** Interfaz responsive, elegante y con soporte nativo para **Modo Oscuro**.
 
-## Run Locally
+## 🛠️ Servicios Destacados
+- **Diseño & Decoración:** Atmósferas inmersivas, diseño floral y mobiliario de lujo.
+- **Producción Técnica:** Sonido de alta gama, iluminación robótica y pantallas LED.
+- **Barra Libre Premium:** Mixología de autor y licores de alta calidad.
 
-**Prerequisites:**  Node.js
+## 🚀 Ejecución Local
 
+### Requisitos Previos
+- [Node.js](https://nodejs.org/) (versión recomendada LTS)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Instalación
+
+1.  **Clonar el repositorio o descargar los archivos.**
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+3.  **Iniciar el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+
+## 🏗️ Stack Tecnológico
+- **Frontend:** React + TypeScript
+- **Framework:** Vite
+- **Estilos:** CSS / Framer Motion
+- **Iconografía:** Material Icons
+- **Gestión de Estado:** React Hooks
