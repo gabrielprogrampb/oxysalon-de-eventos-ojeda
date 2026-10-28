@@ -56,7 +56,7 @@ create table if not exists public.inquiries (
   value           numeric(12, 2) check (value is null or value >= 0),
   notes           text check (char_length(notes) <= 2000),
   source          text not null default 'web',
-  user_agent      text
+  user_agent      text check (user_agent is null or char_length(user_agent) <= 512)
 );
 
 create index if not exists inquiries_created_at_idx on public.inquiries (created_at desc);
@@ -111,10 +111,17 @@ create table if not exists public.calendar_events (
   notes       text check (char_length(notes) <= 1000)
 );
 
--- Vista pública: expone SOLO fecha y estado (nunca títulos ni notas privadas)
+-- Vista pública: expone SOLO fecha y estado (nunca títulos ni notas privadas).
+-- El GROUP BY la hace NO actualizable: sin esto, `anon` podría escribir en
+-- calendar_events a través de la vista saltándose RLS (vista auto-actualizable).
 create or replace view public.calendar_public as
   select date, status
-  from public.calendar_events;
+  from public.calendar_events
+  group by date, status;
+
+-- Solo lectura, y solo por los roles previstos.
+revoke all on public.calendar_public from public, anon, authenticated;
+grant select on public.calendar_public to anon, authenticated;
 
 -- -----------------------------------------------------------------------------
 -- 6. Estadísticas de visitas
@@ -162,11 +169,18 @@ create policy "admins_select_self" on public.admins
   using (user_id = auth.uid());
 
 -- ---------- inquiries ----------
--- El público SOLO puede insertar solicitudes nuevas, con estado 'new'.
+-- El público NO escribe directamente en la tabla: usa la función
+-- public.submit_inquiry(), que valida y fija los campos internos
+-- (status, source, value, notes). Así nadie puede inyectar una cotización
+-- con valor inventado ni marcarla como "reservada".
 drop policy if exists "inquiries_public_insert" on public.inquiries;
-create policy "inquiries_public_insert" on public.inquiries
-  for insert to anon, authenticated
-  with check (status = 'new' and source = 'web');
+
+revoke insert on public.inquiries from anon;
+
+drop policy if exists "inquiries_admin_insert" on public.inquiries;
+create policy "inquiries_admin_insert" on public.inquiries
+  for insert to authenticated
+  with check (public.is_admin());
 
 -- Solo administradores leen, actualizan o borran.
 drop policy if exists "inquiries_admin_select" on public.inquiries;
@@ -233,12 +247,84 @@ create policy "views_admin_read" on public.page_views
   using (public.is_admin());
 
 -- =============================================================================
--- 9. Permisos de la vista pública de agenda
+-- 9. Permisos de la vista pública de agenda (ver sección 5)
 -- =============================================================================
-grant select on public.calendar_public to anon, authenticated;
+-- (el revoke/grant ya se aplica al crear la vista)
 
 -- =============================================================================
--- 10. RPC: "me gusta" en la galería (sin permitir updates arbitrarios)
+-- 10. RPC: enviar solicitud desde el sitio público
+--     Única vía de escritura para `anon`. Valida en servidor, fija los campos
+--     internos y aplica un límite anti-spam por correo.
+-- =============================================================================
+create or replace function public.submit_inquiry(
+  p_name           text,
+  p_email          text,
+  p_phone          text,
+  p_instagram      text default null,
+  p_telegram       text default null,
+  p_event_type     text default null,
+  p_event_date     date default null,
+  p_guests_range   text default null,
+  p_space_interest text default null,
+  p_message        text default null
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_recent integer;
+begin
+  -- Validaciones de servidor (no confiar en el navegador)
+  if p_name is null or char_length(btrim(p_name)) < 2 then
+    raise exception 'invalid_name';
+  end if;
+
+  if p_email is null or p_email !~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]{2,}$' then
+    raise exception 'invalid_email';
+  end if;
+
+  if p_phone is null or char_length(regexp_replace(p_phone, '\D', '', 'g')) < 7 then
+    raise exception 'invalid_phone';
+  end if;
+
+  -- Anti-spam: máximo 3 solicitudes del mismo correo por hora
+  select count(*) into v_recent
+    from public.inquiries
+   where email = lower(btrim(p_email))
+     and created_at > now() - interval '1 hour';
+
+  if v_recent >= 3 then
+    raise exception 'rate_limited';
+  end if;
+
+  insert into public.inquiries (
+    name, email, phone, instagram, telegram,
+    event_type, event_date, guests_range, space_interest, message,
+    status, source, value, notes
+  ) values (
+    left(btrim(p_name), 120),
+    left(lower(btrim(p_email)), 160),
+    left(btrim(p_phone), 40),
+    nullif(left(btrim(coalesce(p_instagram, '')), 80), ''),
+    nullif(left(btrim(coalesce(p_telegram, '')), 80), ''),
+    nullif(left(btrim(coalesce(p_event_type, '')), 60), ''),
+    p_event_date,
+    nullif(left(btrim(coalesce(p_guests_range, '')), 40), ''),
+    nullif(left(btrim(coalesce(p_space_interest, '')), 120), ''),
+    nullif(left(btrim(coalesce(p_message, '')), 2000), ''),
+    'new', 'web', null, null
+  );
+end;
+$$;
+
+revoke all on function public.submit_inquiry(text, text, text, text, text, text, date, text, text, text) from public;
+grant execute on function public.submit_inquiry(text, text, text, text, text, text, date, text, text, text)
+  to anon, authenticated;
+
+-- =============================================================================
+-- 11. RPC: "me gusta" en la galería (sin permitir updates arbitrarios)
 -- =============================================================================
 create or replace function public.like_gallery_item(item_id bigint)
 returns integer
@@ -262,11 +348,18 @@ $$;
 grant execute on function public.like_gallery_item(bigint) to anon, authenticated;
 
 -- =============================================================================
--- 11. STORAGE: bucket público de galería (lectura pública, escritura admin)
+-- 12. STORAGE: bucket público de galería (lectura pública, escritura admin)
 -- =============================================================================
-insert into storage.buckets (id, name, public)
-values ('gallery', 'gallery', true)
-on conflict (id) do update set public = true;
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'gallery', 'gallery', true,
+  5242880,
+  array['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+)
+on conflict (id) do update
+  set public = true,
+      file_size_limit = 5242880,
+      allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
 
 drop policy if exists "gallery_storage_public_read" on storage.objects;
 create policy "gallery_storage_public_read" on storage.objects
@@ -289,7 +382,7 @@ create policy "gallery_storage_admin_delete" on storage.objects
   using (bucket_id = 'gallery' and public.is_admin());
 
 -- =============================================================================
--- 12. DATOS INICIALES DE LA AGENDA (opcional, se puede borrar)
+-- 13. DATOS INICIALES DE LA AGENDA (opcional, se puede borrar)
 -- =============================================================================
 insert into public.calendar_events (date, status, title)
 values

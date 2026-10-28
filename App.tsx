@@ -12,6 +12,7 @@ import DashboardFinance from './pages/DashboardFinance';
 import DashboardInquiry from './pages/DashboardInquiry';
 import CalendarPage from './pages/CalendarPage';
 import Login from './pages/Login';
+import ResetPassword from './pages/ResetPassword';
 import NavMenu from './components/NavMenu';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Footer from './components/Footer';
@@ -64,7 +65,7 @@ const PrivateRoute: React.FC<{ children?: React.ReactNode }> = ({ children }) =>
 const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/dashboard');
-  const isLoginPath = location.pathname === '/login';
+  const isLoginPath = location.pathname === '/login' || location.pathname === '/reset-password';
   const showFooter = !isAdminPath && !isLoginPath;
 
   return (
@@ -95,6 +96,7 @@ const AppRoutes: React.FC = () => (
           <Route path="/booking" element={<Booking />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           {/* Rutas administrativas */}
           <Route

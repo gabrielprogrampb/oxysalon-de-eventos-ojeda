@@ -102,7 +102,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setIsAuthenticated(true);
           setEmail(session.user.email ?? null);
         } else {
-          await supabase.auth.signOut();
+          // No llamar a signOut() de forma síncrona dentro de este callback:
+          // el cliente de auth está bloqueado y puede colgarse.
+          setTimeout(() => {
+            void supabase?.auth.signOut();
+          }, 0);
           setIsAuthenticated(false);
           setEmail(null);
           setError('Esta cuenta no tiene acceso al panel administrativo.');
@@ -174,7 +178,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       emailInput.trim().toLowerCase(),
-      { redirectTo: `${window.location.origin}/login` }
+      { redirectTo: `${window.location.origin}/reset-password` }
     );
     if (resetError) {
       setError(translateAuthError(resetError.message));

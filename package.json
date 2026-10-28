@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "check:env": "node scripts/check-env.mjs",
     "images": "node scripts/localize-images.mjs"
   },
   "dependencies": {

@@ -130,22 +130,6 @@ const mapCalendar = (r: Row): CalendarEvent => ({
 // SOLICITUDES / COTIZACIONES
 // -----------------------------------------------------------------------------
 export async function createInquiry(input: InquiryInput): Promise<void> {
-  const payload = {
-    name: input.name.trim(),
-    email: input.email.trim().toLowerCase(),
-    phone: input.phone.trim(),
-    instagram: input.instagram?.trim() || null,
-    telegram: input.telegram?.trim() || null,
-    event_type: input.eventType?.trim() || null,
-    event_date: input.eventDate || null,
-    guests_range: input.guestsRange?.trim() || null,
-    space_interest: input.spaceInterest?.trim() || null,
-    message: input.message?.trim() || null,
-    status: 'new' as InquiryStatus,
-    source: 'web',
-    user_agent: typeof navigator !== 'undefined' ? navigator.userAgent.slice(0, 300) : null,
-  };
-
   if (!supabase) {
     const items = readLS<Inquiry[]>(LS.inquiries, INQUIRIES);
     const created: Inquiry = {
@@ -159,8 +143,37 @@ export async function createInquiry(input: InquiryInput): Promise<void> {
     return;
   }
 
-  const { error } = await supabase.from('inquiries').insert(payload);
-  if (error) fail('enviar solicitud', error);
+  // Se usa una función RPC en el servidor: valida, fija los campos internos
+  // (status, source, value, notes) y aplica límite anti-spam.
+  const { error } = await supabase.rpc('submit_inquiry', {
+    p_name: input.name,
+    p_email: input.email,
+    p_phone: input.phone,
+    p_instagram: input.instagram?.trim() || null,
+    p_telegram: input.telegram?.trim() || null,
+    p_event_type: input.eventType?.trim() || null,
+    p_event_date: input.eventDate || null,
+    p_guests_range: input.guestsRange?.trim() || null,
+    p_space_interest: input.spaceInterest?.trim() || null,
+    p_message: input.message?.trim() || null,
+  });
+
+  if (error) {
+    const msg = `${error.message} ${error.details ?? ''}`.toLowerCase();
+    if (msg.includes('rate_limited')) {
+      throw new ApiError('Ya recibimos varias solicitudes con este correo. Escríbenos por WhatsApp.');
+    }
+    if (msg.includes('invalid_email')) {
+      throw new ApiError('El correo no es válido. Revísalo e inténtalo de nuevo.');
+    }
+    if (msg.includes('invalid_phone')) {
+      throw new ApiError('El teléfono no es válido. Incluye el código de área.');
+    }
+    if (msg.includes('invalid_name')) {
+      throw new ApiError('Escribe tu nombre completo.');
+    }
+    fail('enviar solicitud', error);
+  }
 }
 
 export async function listInquiries(): Promise<Inquiry[]> {
@@ -232,7 +245,11 @@ export async function listGallery(publicOnly = false): Promise<GalleryItem[]> {
   const { data, error } = await query;
   if (error) fail('listar galería', error);
   const items = (data ?? []).map(mapGallery);
-  // Si la base está vacía todavía, mostramos el contenido base del sitio.
+
+  // En el panel se muestra la realidad (si está vacío, está vacío).
+  if (!publicOnly) return items;
+
+  // En el sitio público, si aún no hay fotos subidas se muestra el contenido base.
   return items.length > 0 ? items : GALLERY_ITEMS;
 }
 

@@ -83,15 +83,30 @@ export function mailLink(subject?: string): string | null {
   return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
 }
 
-/** Redes sociales activas (solo las configuradas). */
+/** Redes sociales activas (solo las configuradas y con URL segura). */
 export function socialLinks(): { name: string; url: string }[] {
+  const safeUrl = (value: string): string | null => {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    if (trimmed.startsWith('@') || !/^https?:\/\//i.test(trimmed)) return null;
+    return trimmed;
+  };
+
   const links: { name: string; url: string }[] = [];
+
   if (SITE.instagram.trim()) {
-    links.push({ name: 'Instagram', url: `https://instagram.com/${SITE.instagram.trim().replace(/^@/, '')}` });
+    links.push({
+      name: 'Instagram',
+      url: `https://instagram.com/${SITE.instagram.trim().replace(/^@/, '')}`,
+    });
   }
-  if (SITE.facebook.trim()) links.push({ name: 'Facebook', url: SITE.facebook.trim() });
+
+  const facebook = safeUrl(SITE.facebook);
+  if (facebook) links.push({ name: 'Facebook', url: facebook });
+
   if (SITE.tiktok.trim()) {
     links.push({ name: 'TikTok', url: `https://tiktok.com/@${SITE.tiktok.trim().replace(/^@/, '')}` });
   }
+
   return links;
 }

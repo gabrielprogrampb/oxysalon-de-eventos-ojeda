@@ -178,6 +178,13 @@ const Gallery: React.FC = () => {
         await likeGalleryItem(id);
       } catch (err) {
         console.error(err);
+        // Si el servidor rechaza, se revierte para no mostrar un número falso
+        setItems((prev) =>
+          prev.map((item) =>
+            item.id === id ? { ...item, likes: Math.max(0, (item.likes || 0) - 1) } : item
+          )
+        );
+        nextLiked.delete(id);
       }
     }
 

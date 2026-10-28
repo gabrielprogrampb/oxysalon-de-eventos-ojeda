@@ -183,6 +183,8 @@ Sin esto, las solicitudes solo se ven al entrar al panel.
    - `RESEND_API_KEY` = `re_...`
    - `NOTIFY_TO` = correo donde quieres recibir los avisos
    - `NOTIFY_FROM` = `onboarding@resend.dev` (funciona sin dominio propio)
+   - `WEBHOOK_SECRET` = una cadena larga aleatoria (obligatoria; genera una con
+     `openssl rand -hex 32` o cualquier generador de contraseñas)
 4. Despliega la función (requiere Supabase CLI):
 
 ```bash
@@ -195,6 +197,10 @@ supabase functions deploy notify-inquiry --no-verify-jwt
 5. Supabase → **Database** → **Webhooks** → *Create a new hook*:
    - Table: `inquiries` · Events: `INSERT`
    - Type: *Supabase Edge Function* → `notify-inquiry`
+   - **HTTP Headers:** `x-webhook-secret` = el mismo valor de `WEBHOOK_SECRET`
+
+   ⚠️ Sin ese header la función responde 401 y no envía nada (así nadie puede usar
+   tu función para mandar correos a tu costa).
 
 Prueba enviando una solicitud desde el sitio: debe llegar el correo en segundos.
 
@@ -202,6 +208,7 @@ Prueba enviando una solicitud desde el sitio: debe llegar el correo en segundos.
 
 ## PARTE 7 — Checklist antes de entregar
 
+- [ ] `npm run check:env` responde ✅ (si falla, el sitio se publicaría en modo demostración).
 - [ ] `npm run build` sin errores.
 - [ ] Envío de prueba desde `/booking` → aparece en el panel y (si aplica) llega el correo.
 - [ ] Login correcto con el usuario admin; una cuenta sin fila en `admins` **no** entra.

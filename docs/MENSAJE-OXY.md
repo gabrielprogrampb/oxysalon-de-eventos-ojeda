@@ -115,9 +115,14 @@ Un solo seguimiento. Si no responde, se cierra el ciclo y se retoma en 3 semanas
 
 ## 8. Antes de enviar el mensaje
 
+> **Ya tienes las capturas listas** en `docs/capturas/` (JPG optimizados, 100–145 KB cada uno,
+> tomados del build de producción). Las tres que recomiendo enviar:
+> `01-portada-escritorio.jpg`, `06-galeria-movil.jpg` y `04-panel-escritorio.jpg`.
+> Las demás están ahí por si quieres reemplazar alguna.
+
 - [ ] Completar `src/config/site.ts` con el WhatsApp y el correo **reales** (si no, el botón de
       WhatsApp no aparece en el sitio).
-- [ ] Tomar las 3 capturas del build de producción (`npm run build` + `npm run preview`).
+- [ ] Regenerar las capturas si cambias datos de contacto visibles.
 - [ ] Revisar que en las capturas no se vea “Modo demostración” ni datos de prueba raros
       (Sarah Jenkins, TechCorp). Para las capturas del panel conviene cargar 2–3 solicitudes
       con nombres creíbles o usar el panel sin la pestaña Buzón.
