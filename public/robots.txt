@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /login
+
+# Sin rastreo de rutas privadas
+Sitemap: https://oxysalon.vercel.app/sitemap.xml

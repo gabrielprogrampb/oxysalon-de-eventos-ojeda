@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   OXYSALON DE EVENTOS — estilos base
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: #0f0b18;
+    color: #f8fafc;
+    font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Foco visible accesible (teclado) sin romper la estética */
+  :focus-visible {
+    outline: 2px solid #d4af37;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: rgba(212, 175, 55, 0.3);
+    color: #fff;
+  }
+
+  /* Respeta la preferencia de menos movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Iconos Material Symbols: permite relleno real */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    user-select: none;
+  }
+
+  .material-symbols-outlined.fill-current {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .glass-panel {
+    background: rgba(15, 11, 24, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    will-change: transform;
+  }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* Animaciones activadas por scroll */
+  .animate-on-scroll {
+    opacity: 0;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+  }
+
+  .animate-pan-left {
+    animation: panLeft 25s ease-in-out infinite alternate;
+  }
+
+  .animate-pan-right {
+    animation: panRight 25s ease-in-out infinite alternate;
+  }
+
+  .animate-pan-zoom {
+    animation: panZoom 20s ease-in-out infinite alternate;
+  }
+
+  .curtain-reveal {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .curtain-reveal.is-visible {
+    animation: curtainLeft 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  .curtain-reveal-right {
+    clip-path: inset(0 0 0 100%);
+  }
+
+  .curtain-reveal-right.is-visible {
+    animation: curtainRight 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  .curtain-reveal-up {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .curtain-reveal-up.is-visible {
+    animation: curtainUp 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  .slide-reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  .slide-reveal-left.is-visible {
+    animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .slide-reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+
+  .slide-reveal-right.is-visible {
+    animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+/* Parallax desactivado en móvil (rendimiento) */
+@media (hover: none) {
+  .parallax-bg {
+    background-attachment: scroll;
+  }
+}

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GALLERY_ITEMS } from '../constants';
-import { GalleryItem } from '../types';
+import type { GalleryItem } from '../types';
 import { AnimateOnScroll } from '../hooks/useScrollAnimation';
+import { listGallery, likeGalleryItem } from '../src/lib/store';
+import { SPACES } from '../constants';
 
 // Sub-component to handle individual image loading states
 const ImageCard: React.FC<{ item: GalleryItem, isLiked: boolean, onClick: () => void, onToggleLike: () => void }> = ({ item, isLiked, onClick, onToggleLike }) => {
@@ -125,48 +126,67 @@ const Gallery: React.FC = () => {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('Todo');
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Initialize Items from localStorage
-  const [items, setItems] = useState<GalleryItem[]>(() => {
-    const saved = localStorage.getItem('gallery_items');
-    return saved ? JSON.parse(saved) : GALLERY_ITEMS;
-  });
-
-  // Track which items THIS user has liked (local browser session)
-  const [userLikedIds, setUserLikedIds] = useState<Set<number>>(() => {
-    const saved = localStorage.getItem('user_liked_ids');
-    return saved ? new Set(JSON.parse(saved)) : new Set();
-  });
-
-  // Sync to local storage when items change
+  // Carga desde la base de datos (o contenido base si aún no hay fotos subidas)
   useEffect(() => {
-    localStorage.setItem('gallery_items', JSON.stringify(items));
-  }, [items]);
-
-  const handleToggleLike = (id: number) => {
-    const isLiked = userLikedIds.has(id);
-    const newLikedIds = new Set(userLikedIds);
-
-    // Update Item Count
-    const updatedItems = items.map(item => {
-      if (item.id === id) {
-        // Safety check: don't go below 0
-        const newCount = isLiked ? Math.max(0, (item.likes || 0) - 1) : (item.likes || 0) + 1;
-        return { ...item, likes: newCount };
+    let active = true;
+    (async () => {
+      try {
+        const data = await listGallery(true);
+        if (active) setItems(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (active) setLoading(false);
       }
-      return item;
-    });
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
-    // Update User State
+  // Likes: se guarda qué fotos marcó ESTE visitante para poder deshacer
+  const [userLikedIds, setUserLikedIds] = useState<Set<number>>(() => {
+    try {
+      const saved = localStorage.getItem('user_liked_ids');
+      return saved ? new Set<number>(JSON.parse(saved)) : new Set<number>();
+    } catch {
+      return new Set<number>();
+    }
+  });
+
+  const handleToggleLike = async (id: number) => {
+    const isLiked = userLikedIds.has(id);
+    const nextLiked = new Set(userLikedIds);
+
     if (isLiked) {
-      newLikedIds.delete(id);
+      nextLiked.delete(id);
+      // No se resta en la base (evita manipulación): solo se actualiza la vista
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, likes: Math.max(0, (item.likes || 0) - 1) } : item
+        )
+      );
     } else {
-      newLikedIds.add(id);
+      nextLiked.add(id);
+      setItems((prev) =>
+        prev.map((item) => (item.id === id ? { ...item, likes: (item.likes || 0) + 1 } : item))
+      );
+      try {
+        await likeGalleryItem(id);
+      } catch (err) {
+        console.error(err);
+      }
     }
 
-    setItems(updatedItems);
-    setUserLikedIds(newLikedIds);
-    localStorage.setItem('user_liked_ids', JSON.stringify(Array.from(newLikedIds)));
+    setUserLikedIds(nextLiked);
+    try {
+      localStorage.setItem('user_liked_ids', JSON.stringify(Array.from(nextLiked)));
+    } catch {
+      /* almacenamiento no disponible */
+    }
   };
 
   const categories = ['Todo', 'Bodas', 'Corporativo', 'Decoración', 'Tecnología', 'Bebidas', 'Salones', 'Exterior'];
@@ -186,7 +206,7 @@ const Gallery: React.FC = () => {
       <div className="relative w-full h-[40vh] min-h-[300px] flex items-end">
         <div
           className="absolute inset-0 parallax-bg animate-pan-zoom"
-          style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwDlq3l0_l6efrFfNfvSlojfptK78NpCaP_5vYGjAYJ7ze85bgWUg0ETA8SwlqQ4YeaA40DjhgKN1pqJ2S_O83HIfgRiG2ZwavG2AyAQiH11WcCK_wt-Xtuba9zQ_bbUnrBlRsMHRpAnw_yc13YJtVEPSdH1511ATfRWriAiS2C7MRHpJGV3YiSN62Zk-UXeHG4jXQDaqrwsn_HdThmnAdyS56-tS2jQxWO7XHi388wDwwp4Srd1EWKk20UDvmuZMWgngA2rYS81eh')` }}
+          style={{ backgroundImage: `url('/images/oxy/img-903bf12d1b34.webp')` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-background-dark/30 via-background-dark/60 to-background-dark"></div>
 
@@ -222,12 +242,14 @@ const Gallery: React.FC = () => {
               <span className="text-[10px] md:text-xs uppercase tracking-wider opacity-60">Fotos</span>
             </div>
             <div className="text-center">
-              <span className="block text-xl md:text-2xl font-bold text-white">15</span>
-              <span className="text-[10px] md:text-xs uppercase tracking-wider opacity-60">Sedes</span>
+              <span className="block text-xl md:text-2xl font-bold text-white">{SPACES.length}</span>
+              <span className="text-[10px] md:text-xs uppercase tracking-wider opacity-60">Espacios</span>
             </div>
             <div className="text-center">
-              <span className="block text-xl md:text-2xl font-bold text-white">4.9</span>
-              <span className="text-[10px] md:text-xs uppercase tracking-wider opacity-60">Valoración</span>
+              <span className="block text-xl md:text-2xl font-bold text-white">
+                {new Set(items.map((i) => i.category).filter(Boolean)).size}
+              </span>
+              <span className="text-[10px] md:text-xs uppercase tracking-wider opacity-60">Categorías</span>
             </div>
           </div>
         </div>
@@ -298,14 +320,14 @@ const Gallery: React.FC = () => {
         </div>
       </div>
 
-      {/* Admin Floating Action Button (Simulated - Left aligned now to avoid overlap) */}
-      <button
-        onClick={() => navigate('/dashboard')}
-        className="fixed bottom-6 left-6 w-12 h-12 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full flex items-center justify-center z-40 hover:bg-white hover:text-primary transition-colors shadow-xl"
-        title="Panel Administrativo"
-      >
-        <span className="material-symbols-outlined text-xl">edit</span>
-      </button>
+      {/* Cargando */}
+      {loading && (
+        <div className="flex items-center justify-center py-20 gap-3 text-gray-400">
+          <span className="material-symbols-outlined animate-spin text-3xl text-gold">progress_activity</span>
+          Cargando galería…
+        </div>
+      )}
+
     </div>
   );
 };

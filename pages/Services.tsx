@@ -15,7 +15,7 @@ const Services: React.FC = () => {
       <div className="relative w-full h-[70vh] min-h-[500px] flex items-end">
         <div
           className="absolute inset-0 parallax-bg animate-pan-zoom"
-          style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPL3mZwTWipeFeef1EAkiAppOUz-4HxcmeXA5WwbWCb_Z46Rs_ng0eVm-8ipCfjcnU7HOhep5E6j934GI-4721tPLJ25VsHdpwTOjV3lKYzBNa6Un-MW7h1SCBU38b3HfiD1iZjCoVoByhao8sq_2JFP1lqzghkbJZCRNYRtVK9Sh4A8ucr4A670noCAggUCjqntaawE6uaCsBPyETkuqxLm6-PCQV4otfy6fHlLQUDG6gusZ6VcINttiuBb9uF4Inurk2p35GKUtb')` }}
+          style={{ backgroundImage: `url('/images/oxy/img-606b588fd0cd.webp')` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/50 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent"></div>
@@ -80,7 +80,7 @@ const Services: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
             <div onClick={() => navigate('/services/decor')} className="group relative h-[450px] rounded-[2rem] overflow-hidden cursor-pointer shadow-2xl border border-white/5 transition-transform hover:-translate-y-1">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 group-hover:animate-pan-left" style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWbtWTIb1VosjmoszvhvN7WwPA7qDCRzcaLEAPZsMxVLq3MKrGEyjDaTQ5Da26F6D274qlehsa7JB9gApZSFsFe7vR8HwdETrXRk4ucLgYrNND88-ahYCAiTzNauGiZ6cjxXaTuRP8OrIXuAoy9ncy_NNRd6QM5GAI6iKwGHz_M0_6UaRT96Rk_IO0U-zbCS6hTEGrzhLVA_WBLZJxpCf3PGATVQbctQ3jaPFjhDRjFva2NLyJbUbhj9CoQjEs33jgS5FrVgSBdZI1')` }}></div>
+              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 group-hover:animate-pan-left" style={{ backgroundImage: `url('/images/oxy/img-31000bf958a9.webp')` }}></div>
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
               <div className="absolute inset-0 p-10 flex flex-col justify-end">
                 <h3 className="text-4xl font-bold text-white mb-3">Diseño y Decoración</h3>
@@ -93,7 +93,7 @@ const Services: React.FC = () => {
 
             <div className="flex flex-col gap-6">
               <div onClick={() => navigate('/services/tech')} className="group relative flex-1 min-h-[250px] rounded-[2rem] overflow-hidden cursor-pointer shadow-2xl border border-white/5 transition-transform hover:-translate-y-1">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 group-hover:animate-pan-right" style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuA64lWGVUXPBta19LZOBMoSswIP7fwpQfzhji2nVAeh3POwt1e6qoGrsgnMJPLd1PakYPNsTEKg9eMXER9OcDR90k6856IUrlaNxGNwuAgvZsXcz2DhHTTI3i4G9PAnMM59Kna2FOL6_SyaLxSDVaUPguYOQ8F_Oz6DQXOJQUfTQyt_guUJxsdnAVcWXIYEyRE-g1zv0AZII36M-tT9HsDJO3IjO2vZrDlUVG9w1pPdDKZZwccw0OwExn2Cj3bdcwzAHtSENApx-UhS')` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 group-hover:animate-pan-right" style={{ backgroundImage: `url('/images/oxy/img-507d9b401ccc.webp')` }}></div>
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
                 <div className="absolute bottom-0 left-0 p-10">
                   <h3 className="text-3xl font-bold text-white">Producción Técnica</h3>

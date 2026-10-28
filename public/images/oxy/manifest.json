@@ -1,32 +1,130 @@
 {
-  "img-507d9b401cccbaae631d63a228d63553": {
-    "base": "/images/oxy/img-507d9b401cccbaae631d63a228d63553.webp",
-    "width": 1600,
-    "height": 1600,
+  "img-369b9401311e": {
+    "base": "/images/oxy/img-369b9401311e.webp",
     "variants": {
-      "480": "/images/oxy/img-507d9b401cccbaae631d63a228d63553-480.webp",
-      "960": "/images/oxy/img-507d9b401cccbaae631d63a228d63553-960.webp",
-      "1600": "/images/oxy/img-507d9b401cccbaae631d63a228d63553.webp"
+      "480": "/images/oxy/img-369b9401311e-480.webp",
+      "960": "/images/oxy/img-369b9401311e-960.webp",
+      "1600": "/images/oxy/img-369b9401311e.webp"
     }
   },
-  "img-aa62b78e00a61d6de8f3d9a040ada79b": {
-    "base": "/images/oxy/img-aa62b78e00a61d6de8f3d9a040ada79b.webp",
-    "width": 1600,
-    "height": 1600,
+  "img-25597864f1fc": {
+    "base": "/images/oxy/img-25597864f1fc.webp",
     "variants": {
-      "480": "/images/oxy/img-aa62b78e00a61d6de8f3d9a040ada79b-480.webp",
-      "960": "/images/oxy/img-aa62b78e00a61d6de8f3d9a040ada79b-960.webp",
-      "1600": "/images/oxy/img-aa62b78e00a61d6de8f3d9a040ada79b.webp"
+      "480": "/images/oxy/img-25597864f1fc-480.webp",
+      "960": "/images/oxy/img-25597864f1fc-960.webp",
+      "1600": "/images/oxy/img-25597864f1fc.webp"
     }
   },
-  "img-25597864f1fc55c200a9306abd032f35": {
-    "base": "/images/oxy/img-25597864f1fc55c200a9306abd032f35.webp",
-    "width": 1600,
-    "height": 1600,
+  "img-84c147cdaf4c": {
+    "base": "/images/oxy/img-84c147cdaf4c.webp",
     "variants": {
-      "480": "/images/oxy/img-25597864f1fc55c200a9306abd032f35-480.webp",
-      "960": "/images/oxy/img-25597864f1fc55c200a9306abd032f35-960.webp",
-      "1600": "/images/oxy/img-25597864f1fc55c200a9306abd032f35.webp"
+      "480": "/images/oxy/img-84c147cdaf4c-480.webp",
+      "960": "/images/oxy/img-84c147cdaf4c-960.webp",
+      "1600": "/images/oxy/img-84c147cdaf4c.webp"
+    }
+  },
+  "img-903bf12d1b34": {
+    "base": "/images/oxy/img-903bf12d1b34.webp",
+    "variants": {
+      "480": "/images/oxy/img-903bf12d1b34-480.webp",
+      "960": "/images/oxy/img-903bf12d1b34-960.webp",
+      "1600": "/images/oxy/img-903bf12d1b34.webp"
+    }
+  },
+  "img-e59622203dde": {
+    "base": "/images/oxy/img-e59622203dde.webp",
+    "variants": {
+      "480": "/images/oxy/img-e59622203dde-480.webp",
+      "960": "/images/oxy/img-e59622203dde-960.webp",
+      "1600": "/images/oxy/img-e59622203dde.webp"
+    }
+  },
+  "img-31000bf958a9": {
+    "base": "/images/oxy/img-31000bf958a9.webp",
+    "variants": {
+      "480": "/images/oxy/img-31000bf958a9-480.webp",
+      "960": "/images/oxy/img-31000bf958a9-960.webp",
+      "1600": "/images/oxy/img-31000bf958a9.webp"
+    }
+  },
+  "img-f54ceb1e4977": {
+    "base": "/images/oxy/img-f54ceb1e4977.webp",
+    "variants": {
+      "480": "/images/oxy/img-f54ceb1e4977-480.webp",
+      "960": "/images/oxy/img-f54ceb1e4977-960.webp",
+      "1600": "/images/oxy/img-f54ceb1e4977.webp"
+    }
+  },
+  "img-e44d09aa75df": {
+    "base": "/images/oxy/img-e44d09aa75df.webp",
+    "variants": {
+      "480": "/images/oxy/img-e44d09aa75df-480.webp",
+      "960": "/images/oxy/img-e44d09aa75df-960.webp",
+      "1600": "/images/oxy/img-e44d09aa75df.webp"
+    }
+  },
+  "img-606b588fd0cd": {
+    "base": "/images/oxy/img-606b588fd0cd.webp",
+    "variants": {
+      "480": "/images/oxy/img-606b588fd0cd-480.webp",
+      "960": "/images/oxy/img-606b588fd0cd-960.webp",
+      "1600": "/images/oxy/img-606b588fd0cd.webp"
+    }
+  },
+  "img-507d9b401ccc": {
+    "base": "/images/oxy/img-507d9b401ccc.webp",
+    "variants": {
+      "480": "/images/oxy/img-507d9b401ccc-480.webp",
+      "960": "/images/oxy/img-507d9b401ccc-960.webp",
+      "1600": "/images/oxy/img-507d9b401ccc.webp"
+    }
+  },
+  "img-d8408533df3e": {
+    "base": "/images/oxy/img-d8408533df3e.webp",
+    "variants": {
+      "480": "/images/oxy/img-d8408533df3e-480.webp",
+      "960": "/images/oxy/img-d8408533df3e-960.webp",
+      "1600": "/images/oxy/img-d8408533df3e.webp"
+    }
+  },
+  "img-20dd57a02f43": {
+    "base": "/images/oxy/img-20dd57a02f43.webp",
+    "variants": {
+      "480": "/images/oxy/img-20dd57a02f43-480.webp",
+      "960": "/images/oxy/img-20dd57a02f43-960.webp",
+      "1600": "/images/oxy/img-20dd57a02f43.webp"
+    }
+  },
+  "img-aa62b78e00a6": {
+    "base": "/images/oxy/img-aa62b78e00a6.webp",
+    "variants": {
+      "480": "/images/oxy/img-aa62b78e00a6-480.webp",
+      "960": "/images/oxy/img-aa62b78e00a6-960.webp",
+      "1600": "/images/oxy/img-aa62b78e00a6.webp"
+    }
+  },
+  "img-928e542805f9": {
+    "base": "/images/oxy/img-928e542805f9.webp",
+    "variants": {
+      "480": "/images/oxy/img-928e542805f9-480.webp",
+      "960": "/images/oxy/img-928e542805f9-960.webp",
+      "1600": "/images/oxy/img-928e542805f9.webp"
+    }
+  },
+  "img-f88be43766e4": {
+    "base": "/images/oxy/img-f88be43766e4.webp",
+    "variants": {
+      "480": "/images/oxy/img-f88be43766e4-480.webp",
+      "960": "/images/oxy/img-f88be43766e4-960.webp",
+      "1600": "/images/oxy/img-f88be43766e4.webp"
+    }
+  },
+  "img-4c3093b10c97": {
+    "base": "/images/oxy/img-4c3093b10c97.webp",
+    "variants": {
+      "480": "/images/oxy/img-4c3093b10c97-480.webp",
+      "960": "/images/oxy/img-4c3093b10c97-960.webp",
+      "1600": "/images/oxy/img-4c3093b10c97.webp"
     }
   }
 }

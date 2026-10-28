@@ -1,3 +1,7 @@
+// =============================================================================
+// Tipos de dominio (camelCase). La base de datos usa snake_case y la capa
+// src/lib/store.ts hace la conversión. No cambiar sin actualizar el store.
+// =============================================================================
 
 export interface Space {
   id: number;
@@ -12,45 +16,68 @@ export interface Space {
   features?: string[];
 }
 
+export type GalleryType = 'wide' | 'tall' | 'square';
+
 export interface GalleryItem {
   id: number;
+  createdAt?: string;
   image: string;
   title?: string;
-  category?: string; // New field for filtering
-  subtitle?: string;
+  category?: string;
+  type: GalleryType;
+  likes: number;
   featured?: boolean;
-  likes: number; // Changed from boolean to number for counter
-  type: 'wide' | 'tall' | 'square';
+  published?: boolean;
 }
+
+export type InquiryStatus = 'new' | 'contacted' | 'quoted' | 'booked' | 'lost';
 
 export interface Inquiry {
   id: number;
+  createdAt: string;
   name: string;
-  email?: string;
-  phone?: string;
+  email: string;
+  phone: string;
+  instagram?: string | null;
+  telegram?: string | null;
+  eventType?: string | null;
+  eventDate?: string | null;
+  guestsRange?: string | null;
+  spaceInterest?: string | null;
+  message?: string | null;
+  status: InquiryStatus;
+  value?: number | null;
+  notes?: string | null;
+  source?: string;
+}
+
+/** Datos que envía el formulario público. */
+export interface InquiryInput {
+  name: string;
+  email: string;
+  phone: string;
   instagram?: string;
   telegram?: string;
-  company?: string;
-  avatar?: string;
-  initials?: string;
-  initialsColor?: string;
-  type: string;
-  message: string;
-  spaceOfInterest?: string; // New field for selected space
-  time: string;
-  status?: 'New' | 'Replied' | 'Booked';
-  statusColor?: string;
-  value?: number; // New field for financial management (Quote amount)
+  eventType?: string;
+  eventDate?: string;
+  guestsRange?: string;
+  spaceInterest?: string;
+  message?: string;
 }
+
+export type TransactionType = 'income' | 'expense';
+export type TransactionStatus = 'completed' | 'pending';
 
 export interface Transaction {
   id: number;
+  createdAt?: string;
   title: string;
   amount: number;
-  type: 'income' | 'expense';
+  type: TransactionType;
   category: string;
   date: string;
-  status: 'completed' | 'pending';
+  status: TransactionStatus;
+  inquiryId?: number | null;
 }
 
 export interface Testimonial {
@@ -62,10 +89,12 @@ export interface Testimonial {
   image: string;
 }
 
+export type CalendarStatus = 'booked' | 'hold' | 'maintenance';
+
 export interface CalendarEvent {
   id: string;
-  date: string; // ISO string YYYY-MM-DD
-  status: 'booked' | 'maintenance' | 'hold';
+  date: string; // YYYY-MM-DD
+  status: CalendarStatus;
   title?: string;
   timeStart?: string;
   timeEnd?: string;

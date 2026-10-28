@@ -11,15 +11,19 @@ const NavMenu: React.FC = () => {
     { label: 'Espacios', path: '/spaces' },
     { label: 'Galería', path: '/gallery' },
     { label: 'Servicios', path: '/services' },
-    { label: 'Agenda & Disponibilidad', path: '/calendar' }, // Added Calendar
+    { label: 'Agenda & Disponibilidad', path: '/calendar' },
     { label: 'Reservar', path: '/booking' },
-    { label: 'Administración', path: '/dashboard' },
   ];
 
   const handleNavigate = (path: string) => {
     navigate(path);
     setIsOpen(false);
   };
+
+  // No mostrar en el panel ni en el login
+  if (location.pathname === '/login' || location.pathname.startsWith('/dashboard')) {
+    return null;
+  }
 
   return (
     <>

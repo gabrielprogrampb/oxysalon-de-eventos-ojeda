@@ -60,7 +60,7 @@ const Home: React.FC = () => {
         <section className="relative h-[95vh] w-full flex items-end justify-center pb-16 md:pb-24 overflow-hidden">
           <div
             className="absolute inset-0 parallax-bg z-0 animate-pan-zoom"
-            style={{ backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwYDZS9J96ZRrKG23lumANkWuo4yY4sWpeHe8d3MnER59ehdbZDUoI3MRt4t0W_8mkB_7oRdCaUGFuSEcRlIHvcdyZwkfeRi6gFfcj7BP59hGrkH8ZCp3ZoHgf4pLuj2SoocXIpKUoVt3JesOZju2R1ZEFTpQI2l3hNjZ68Gd5r3O72SyA0_yFvm8kSHp4J4-7ONpxTKSiwqRfen1RK83NlCDsW9tLI2MMltPhUrPIVwtGQXOP62Ebdkfkx6661pjZL1xgC0_V_xXL")` }}
+            style={{ backgroundImage: `url("/images/oxy/img-e59622203dde.webp")` }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-background-dark z-10"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent z-10"></div>
@@ -164,22 +164,22 @@ const Home: React.FC = () => {
                     {
                       icon: 'diamond',
                       label: 'Decoración',
-                      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCWbtWTIb1VosjmoszvhvN7WwPA7qDCRzcaLEAPZsMxVLq3MKrGEyjDaTQ5Da26F6D274qlehsa7JB9gApZSFsFe7vR8HwdETrXRk4ucLgYrNND88-ahYCAiTzNauGiZ6cjxXaTuRP8OrIXuAoy9ncy_NNRd6QM5GAI6iKwGHz_M0_6UaRT96Rk_IO0U-zbCS6hTEGrzhLVA_WBLZJxpCf3PGATVQbctQ3jaPFjhDRjFva2NLyJbUbhj9CoQjEs33jgS5FrVgSBdZI1'
+                      image: '/images/oxy/img-31000bf958a9.webp'
                     },
                     {
                       icon: 'restaurant_menu',
                       label: 'Gastronomía',
-                      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB0bDgtrKI_TUOe4hWGIwnlE62qmvdCJIb-jSQpQO7tBsLejPgvcvMUuqcxvXciCONgzXRqOXK6u3I_acK66lAwOIxSnQ19Uk9caRnFOOeqpZLvOFKtaVWPug2TmTQXbX62gfI42mKlbqww6NnWn1BfhAXoj6SFRoPAdn530TbmCzFioD_nJ5ccpZYZpot7tbt0wHGhi6co2quJGgO5wc0dnSuOy_EvqhvyIgDvm6v1GtsYh9tBhaHDs7-2w6uXgTZAtCZNt9c_aeyZ'
+                      image: '/images/oxy/img-25597864f1fc.webp'
                     },
                     {
                       icon: 'music_note',
                       label: 'Sonido',
-                      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBMrgGUY5bQ7vT9AMSsVis4uNWo_qKEozr_X-icakJ35uh1UR975kNl8st8qWWZYVnZD-wIHXiUKS7SSD9XQMAB506XH17QjnDGbWnuV8f2MY4LBQSVIZBdUz3xhfKJEdWONraJHpZnixRgy9zCTljhbAISUBKipT22AYJqOlf00OQLck1zTeqGWFnaTkuEjglGoewakusLyeq3pLR9Nru0Q6Lj39VZ-Aij4-iG9uWDoqNuzT2_9OlZM3mmSjP2atke7zFdj40CkTjA'
+                      image: '/images/oxy/img-f54ceb1e4977.webp'
                     },
                     {
                       icon: 'local_bar',
                       label: 'Bar',
-                      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCGl2CoRsZ5-OU4NfQ9625UGylKJ5gWSH83o_27IgD0AM-QKM4Rg-silnIc0Ha3vswVyPSf6ApE2eB8Zd6P-aE7u9cMG5fZQhw60zup9pmcqcEfSpqO5bxWz72v3xqhgSexLv4w7K7vdQhCsq3PobyDDqK51SGguVaKIttQ8JHQgPpwuWVFPoizan7Fkie47_QGDYBGpTPxvnTcjzDvjZaMTzQ9wp4i5mnugwUiBW_uQB0AK0tVSCac5kAuCctTmd_mdHoeQvvV3K3-'
+                      image: '/images/oxy/img-e44d09aa75df.webp'
                     }
                   ].map((item, idx) => (
                     <div key={idx} onClick={() => navigate('/services')} className="aspect-square rounded-3xl overflow-hidden relative group cursor-pointer border border-white/5 shadow-lg">

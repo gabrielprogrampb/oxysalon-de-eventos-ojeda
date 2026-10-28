@@ -6,7 +6,7 @@ export const SERVICE_DETAILS = {
   decor: {
     title: "Diseño & Decoración",
     subtitle: "Atmósferas que cuentan historias",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWbtWTIb1VosjmoszvhvN7WwPA7qDCRzcaLEAPZsMxVLq3MKrGEyjDaTQ5Da26F6D274qlehsa7JB9gApZSFsFe7vR8HwdETrXRk4ucLgYrNND88-ahYCAiTzNauGiZ6cjxXaTuRP8OrIXuAoy9ncy_NNRd6QM5GAI6iKwGHz_M0_6UaRT96Rk_IO0U-zbCS6hTEGrzhLVA_WBLZJxpCf3PGATVQbctQ3jaPFjhDRjFva2NLyJbUbhj9CoQjEs33jgS5FrVgSBdZI1",
+    heroImage: "/images/oxy/img-31000bf958a9.webp",
     description: "Creemos que cada evento es una obra de arte viva. Nuestro equipo de diseñadores florales y arquitectos de interiores transforma espacios vacíos en universos visuales inmersivos, curando cada textura, color y punto de luz para evocar emociones profundas.",
     features: [
       { title: "Diseño Floral", desc: "Arreglos esculturales con flores importadas." },
@@ -15,15 +15,15 @@ export const SERVICE_DETAILS = {
       { title: "Table Styling", desc: "Vajilla, cristalería y mantelería de lujo." }
     ],
     gallery: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBK6B3DgepAzjJ2A0n0cpD-nla3U67EyaNbDbtkRhNa-23KrXB43SIm2zyBfnmXAw9PuclSf692RBrenk6-7jX2aMWoydLKj1Ox33Uf6CqWUSMp9k9DK85XmukmUgVQynSU00YzG5NiOdTfndAl2KLxnrbrv6uCdEka4SjBPlhBQW0k4QNSWG6A8L0oWml2BjjBX2CdydQFjrtnbksEOiWjn2j30NiTl4pNOxeiJUXwI3xX8lc8S3BnNnZjhSLSnjBfKxRqROran7mD",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBPaRdV4e_HKmzWZBXlxITL7TpYG13wE1wPQ7oOsjLyrn6P4JPCckGRgntUETkrB6d10GZrqkkkRbb7GKCdeUYA0zdH4DY9bz-2kg1q3XJURcNwid1QDblXw0H_vjcO5A7depT-3e2wpez7lmvf07X0usbBO11Gykrtal4Bq4BXb2cT87ht7C1qiAHZlpqXto-fjYKqelL1WCWuZI2oo01HBO2449lZNCaVcsHWK49lHqK_sGaLujK5oqXExGoMAXfHeCO2LXG3WC51",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCWbtWTIb1VosjmoszvhvN7WwPA7qDCRzcaLEAPZsMxVLq3MKrGEyjDaTQ5Da26F6D274qlehsa7JB9gApZSFsFe7vR8HwdETrXRk4ucLgYrNND88-ahYCAiTzNauGiZ6cjxXaTuRP8OrIXuAoy9ncy_NNRd6QM5GAI6iKwGHz_M0_6UaRT96Rk_IO0U-zbCS6hTEGrzhLVA_WBLZJxpCf3PGATVQbctQ3jaPFjhDRjFva2NLyJbUbhj9CoQjEs33jgS5FrVgSBdZI1"
+      "/images/oxy/img-20dd57a02f43.webp",
+      "/images/oxy/img-369b9401311e.webp",
+      "/images/oxy/img-31000bf958a9.webp"
     ]
   },
   tech: {
     title: "Producción Técnica",
     subtitle: "Impacto sensorial de alto nivel",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuA64lWGVUXPBta19LZOBMoSswIP7fwpQfzhji2nVAeh3POwt1e6qoGrsgnMJPLd1PakYPNsTEKg9eMXER9OcDR90k6856IUrlaNxGNwuAgvZsXcz2DhHTTI3i4G9PAnMM59Kna2FOL6_SyaLxSDVaUPguYOQ8F_Oz6DQXOJQUfTQyt_guUJxsdnAVcWXIYEyRE-g1zv0AZII36M-tT9HsDJO3IjO2vZrDlUVG9w1pPdDKZZwccw0OwExn2Cj3bdcwzAHtSENApx-UhS",
+    heroImage: "/images/oxy/img-507d9b401ccc.webp",
     description: "La tecnología al servicio de la emoción. Nuestra infraestructura audiovisual es la columna vertebral de eventos inolvidables, combinando ingeniería de sonido de precisión con diseño de iluminación arquitectónica y robótica para crear momentos climáticos perfectos.",
     features: [
       { title: "Sonido Line Array", desc: "Acústica perfecta en cualquier punto del salón." },
@@ -32,15 +32,15 @@ export const SERVICE_DETAILS = {
       { title: "Efectos Especiales", desc: "Humo bajo, pirotecnia fría y láseres." }
     ],
     gallery: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBMrgGUY5bQ7vT9AMSsVis4uNWo_qKEozr_X-icakJ35uh1UR975kNl8st8qWWZYVnZD-wIHXiUKS7SSD9XQMAB506XH17QjnDGbWnuV8f2MY4LBQSVIZBdUz3xhfKJEdWONraJHpZnixRgy9zCTljhbAISUBKipT22AYJqOlf00OQLck1zTeqGWFnaTkuEjglGoewakusLyeq3pLR9Nru0Q6Lj39VZ-Aij4-iG9uWDoqNuzT2_9OlZM3mmSjP2atke7zFdj40CkTjA",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA64lWGVUXPBta19LZOBMoSswIP7fwpQfzhji2nVAeh3POwt1e6qoGrsgnMJPLd1PakYPNsTEKg9eMXER9OcDR90k6856IUrlaNxGNwuAgvZsXcz2DhHTTI3i4G9PAnMM59Kna2FOL6_SyaLxSDVaUPguYOQ8F_Oz6DQXOJQUfTQyt_guUJxsdnAVcWXIYEyRE-g1zv0AZII36M-tT9HsDJO3IjO2vZrDlUVG9w1pPdDKZZwccw0OwExn2Cj3bdcwzAHtSENApx-UhS",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD-zXpaBHCbYl8UJYlqygJMGx3gdT0il88hrKtzg-GLoMC2MzD2xrDn1LtKR-LAp9xbNaoJ8V9tr5qNUCbn-Mm-vlzvP2z2Z_WiDqB0Rn8WHxjPTOGhjsmaUAxno-N-yV_yJ-vL5W9nvyyevRJhWSQQJQPtcccUrauG4n3FceztQ1t1obEC9jGnYMi5UN8mkwuBMY-r6XpiYoaMILz414HDQELdxa1p-DtD-ROkiIqFVCBsDprBwyuEz0B59AVAIZLjJExcQiYgv8dt"
+      "/images/oxy/img-f54ceb1e4977.webp",
+      "/images/oxy/img-507d9b401ccc.webp",
+      "/images/oxy/img-d8408533df3e.webp"
     ]
   },
   bar: {
     title: "Barra Libre Premium",
     subtitle: "El arte de la mixología",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCGl2CoRsZ5-OU4NfQ9625UGylKJ5gWSH83o_27IgD0AM-QKM4Rg-silnIc0Ha3vswVyPSf6ApE2eB8Zd6P-aE7u9cMG5fZQhw60zup9pmcqcEfSpqO5bxWz72v3xqhgSexLv4w7K7vdQhCsq3PobyDDqK51SGguVaKIttQ8JHQgPpwuWVFPoizan7Fkie47_QGDYBGpTPxvnTcjzDvjZaMTzQ9wp4i5mnugwUiBW_uQB0AK0tVSCac5kAuCctTmd_mdHoeQvvV3K3-",
+    heroImage: "/images/oxy/img-e44d09aa75df.webp",
     description: "Elevamos el estándar de la hospitalidad. Nuestros mixólogos expertos no solo sirven bebidas; crean experiencias líquidas. Con una selección curada de licores top-shelf e ingredientes frescos y exóticos, nuestra barra se convierte en el centro social de tu celebración.",
     features: [
       { title: "Mixología de Autor", desc: "Cócteles diseñados exclusivamente para tu evento." },
@@ -49,9 +49,9 @@ export const SERVICE_DETAILS = {
       { title: "Show Bartending", desc: "Flair y servicio espectáculo opcional." }
     ],
     gallery: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCGl2CoRsZ5-OU4NfQ9625UGylKJ5gWSH83o_27IgD0AM-QKM4Rg-silnIc0Ha3vswVyPSf6ApE2eB8Zd6P-aE7u9cMG5fZQhw60zup9pmcqcEfSpqO5bxWz72v3xqhgSexLv4w7K7vdQhCsq3PobyDDqK51SGguVaKIttQ8JHQgPpwuWVFPoizan7Fkie47_QGDYBGpTPxvnTcjzDvjZaMTzQ9wp4i5mnugwUiBW_uQB0AK0tVSCac5kAuCctTmd_mdHoeQvvV3K3-",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAmLe9vL2z4405_aSNMLLzxgTU1pY_7GdUnNsg5v9PTDhhryVU0oGckjTBVV0toYZ5ndXeWCYCW3WQI1lgPP_czIrc6No-EvsfPOTr1OSQOv8wBw_UteijZ9yQLYnYFbsqRX42QCwyZz036Knd1FfhEH62ozvnMZnDh1-VCGnMXwAqZF4vU44kHtMuzNxWFY8aCp7-5muwzu_BT0BGmD1Pa-2dtjKBiuIjh5D-gc3IUd9ZIJvC5k07R69H56E0OLlLtD4SK6SMsm4qV",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB0bDgtrKI_TUOe4hWGIwnlE62qmvdCJIb-jSQpQO7tBsLejPgvcvMUuqcxvXciCONgzXRqOXK6u3I_acK66lAwOIxSnQ19Uk9caRnFOOeqpZLvOFKtaVWPug2TmTQXbX62gfI42mKlbqww6NnWn1BfhAXoj6SFRoPAdn530TbmCzFioD_nJ5ccpZYZpot7tbt0wHGhi6co2quJGgO5wc0dnSuOy_EvqhvyIgDvm6v1GtsYh9tBhaHDs7-2w6uXgTZAtCZNt9c_aeyZ"
+      "/images/oxy/img-e44d09aa75df.webp",
+      "/images/oxy/img-aa62b78e00a6.webp",
+      "/images/oxy/img-25597864f1fc.webp"
     ]
   }
 };
@@ -60,7 +60,7 @@ export const SPACES: Space[] = [
   {
     id: 1,
     name: "El Gran Salón de Baile",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDwDlq3l0_l6efrFfNfvSlojfptK78NpCaP_5vYGjAYJ7ze85bgWUg0ETA8SwlqQ4YeaA40DjhgKN1pqJ2S_O83HIfgRiG2ZwavG2AyAQiH11WcCK_wt-Xtuba9zQ_bbUnrBlRsMHRpAnw_yc13YJtVEPSdH1511ATfRWriAiS2C7MRHpJGV3YiSN62Zk-UXeHG4jXQDaqrwsn_HdThmnAdyS56-tS2jQxWO7XHi388wDwwp4Srd1EWKk20UDvmuZMWgngA2rYS81eh",
+    image: "/images/oxy/img-903bf12d1b34.webp",
     price: "$$$",
     guests: 300,
     sqft: 5000,
@@ -72,7 +72,7 @@ export const SPACES: Space[] = [
   {
     id: 4,
     name: "Salón Ejecutivo",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD-zXpaBHCbYl8UJYlqygJMGx3gdT0il88hrKtzg-GLoMC2MzD2xrDn1LtKR-LAp9xbNaoJ8V9tr5qNUCbn-Mm-vlzvP2z2Z_WiDqB0Rn8WHxjPTOGhjsmaUAxno-N-yV_yJ-vL5W9nvyyevRJhWSQQJQPtcccUrauG4n3FceztQ1t1obEC9jGnYMi5UN8mkwuBMY-r6XpiYoaMILz414HDQELdxa1p-DtD-ROkiIqFVCBsDprBwyuEz0B59AVAIZLjJExcQiYgv8dt",
+    image: "/images/oxy/img-d8408533df3e.webp",
     price: "$$",
     guests: 50,
     sqft: 1200,
@@ -86,7 +86,7 @@ export const SPACES: Space[] = [
 export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 1,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWbtWTIb1VosjmoszvhvN7WwPA7qDCRzcaLEAPZsMxVLq3MKrGEyjDaTQ5Da26F6D274qlehsa7JB9gApZSFsFe7vR8HwdETrXRk4ucLgYrNND88-ahYCAiTzNauGiZ6cjxXaTuRP8OrIXuAoy9ncy_NNRd6QM5GAI6iKwGHz_M0_6UaRT96Rk_IO0U-zbCS6hTEGrzhLVA_WBLZJxpCf3PGATVQbctQ3jaPFjhDRjFva2NLyJbUbhj9CoQjEs33jgS5FrVgSBdZI1",
+    image: "/images/oxy/img-31000bf958a9.webp",
     title: "Montaje de Mesa",
     category: "Bodas",
     type: "wide",
@@ -94,7 +94,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 2,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBK6B3DgepAzjJ2A0n0cpD-nla3U67EyaNbDbtkRhNa-23KrXB43SIm2zyBfnmXAw9PuclSf692RBrenk6-7jX2aMWoydLKj1Ox33Uf6CqWUSMp9k9DK85XmukmUgVQynSU00YzG5NiOdTfndAl2KLxnrbrv6uCdEka4SjBPlhBQW0k4QNSWG6A8L0oWml2BjjBX2CdydQFjrtnbksEOiWjn2j30NiTl4pNOxeiJUXwI3xX8lc8S3BnNnZjhSLSnjBfKxRqROran7mD",
+    image: "/images/oxy/img-20dd57a02f43.webp",
     title: "Cena de Gala",
     category: "Corporativo",
     likes: 128,
@@ -102,7 +102,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 3,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCl1NzY6VUOSldPKrsuZEBg89MFr0RusTU6jMiAReDnvyqwrlw0cPVOFocbmALoig-oHijX5EuIrjJv_vpRBmcOO2L0eaFzlodxDLhstdiNzSQiGIgUbl1Czhm3FCWZsXNv74GW1o8Cv9k0tFDGrOBUFBfbx2ktG2pAymyz5IKfpsm6_pLShA8eAbPG8GrfS3LpVEz5xpZ8w0u6kaOGX043fT9MKuR5gmjtPdlewu2y3X0hIFGP9NsnlyoySAd1Z0hwKLMRF_nqU0uW",
+    image: "/images/oxy/img-928e542805f9.webp",
     title: "Detalles Florales",
     category: "Decoración",
     featured: true,
@@ -111,7 +111,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 4,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBPaRdV4e_HKmzWZBXlxITL7TpYG13wE1wPQ7oOsjLyrn6P4JPCckGRgntUETkrB6d10GZrqkkkRbb7GKCdeUYA0zdH4DY9bz-2kg1q3XJURcNwid1QDblXw0H_vjcO5A7depT-3e2wpez7lmvf07X0usbBO11Gykrtal4Bq4BXb2cT87ht7C1qiAHZlpqXto-fjYKqelL1WCWuZI2oo01HBO2449lZNCaVcsHWK49lHqK_sGaLujK5oqXExGoMAXfHeCO2LXG3WC51",
+    image: "/images/oxy/img-369b9401311e.webp",
     title: "Iluminación Escénica",
     category: "Tecnología",
     type: "wide",
@@ -119,7 +119,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 5,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBHQzbdraNXpAtG1QymVHGbuD1d70DwmkCTYYZKwaUKMzE-XQ2Xk-ZJqunM99P74GWm5QnXiB093fkphSJsM2OpDHCZju5TfPED5H7219p5gKUCoFYRVuRb7Si-LeOUvwCkrNPw5dm3KbiJU2RqgosRk0iJcB2BvkVYnkUJPWuSCVwqDcxjk-f9hr8VSwjDDfijRKLjHIpgBQHAe-6IDkO_OinEGmHl7B3Quf1MF4fMSd7kJpKy1E6uIzNPVrQZ8E2XXXIDukqAPaeD",
+    image: "/images/oxy/img-f88be43766e4.webp",
     title: "Cocktail Bar",
     category: "Bebidas",
     likes: 195,
@@ -127,7 +127,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 6,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMrgGUY5bQ7vT9AMSsVis4uNWo_qKEozr_X-icakJ35uh1UR975kNl8st8qWWZYVnZD-wIHXiUKS7SSD9XQMAB506XH17QjnDGbWnuV8f2MY4LBQSVIZBdUz3xhfKJEdWONraJHpZnixRgy9zCTljhbAISUBKipT22AYJqOlf00OQLck1zTeqGWFnaTkuEjglGoewakusLyeq3pLR9Nru0Q6Lj39VZ-Aij4-iG9uWDoqNuzT2_9OlZM3mmSjP2atke7zFdj40CkTjA",
+    image: "/images/oxy/img-f54ceb1e4977.webp",
     title: "Evento Social",
     category: "Bodas",
     type: "wide",
@@ -135,7 +135,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 7,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAmLe9vL2z4405_aSNMLLzxgTU1pY_7GdUnNsg5v9PTDhhryVU0oGckjTBVV0toYZ5ndXeWCYCW3WQI1lgPP_czIrc6No-EvsfPOTr1OSQOv8wBw_UteijZ9yQLYnYFbsqRX42QCwyZz036Knd1FfhEH62ozvnMZnDh1-VCGnMXwAqZF4vU44kHtMuzNxWFY8aCp7-5muwzu_BT0BGmD1Pa-2dtjKBiuIjh5D-gc3IUd9ZIJvC5k07R69H56E0OLlLtD4SK6SMsm4qV",
+    image: "/images/oxy/img-aa62b78e00a6.webp",
     title: "Salón Principal",
     category: "Salones",
     type: "wide",
@@ -143,55 +143,59 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   }
 ];
 
+// Datos de ejemplo SOLO para el modo demostración (sin Supabase configurado).
+// En producción estas filas viven en la tabla `inquiries`.
 export const INQUIRIES: Inquiry[] = [
   {
     id: 1,
-    name: "Sarah Jenkins",
-    email: "sarah.j@example.com",
-    phone: "584121234567",
-    instagram: "sarahjenkins",
-    telegram: "sarah_events",
-    initials: "SJ",
-    initialsColor: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400",
-    type: "Cotización de Boda",
-    message: "Hola, busco reservar el gran salón para una recepción de boda el 15 de junio. ¿Podrían enviarme los paquetes de precios?",
-    spaceOfInterest: "El Gran Salón de Baile",
-    time: "hace 2 min",
-    status: "New",
-    statusColor: "bg-primary/20 text-primary",
-    value: 4500
+    createdAt: '2026-10-27T14:32:00.000Z',
+    name: 'Sarah Jenkins',
+    email: 'sarah.j@example.com',
+    phone: '+58 412-1234567',
+    instagram: 'sarahjenkins',
+    telegram: 'sarah_events',
+    eventType: 'Boda',
+    eventDate: '2026-12-15',
+    guestsRange: '150 - 250',
+    spaceInterest: 'El Gran Salón de Baile',
+    message:
+      'Hola, busco reservar el gran salón para una recepción de boda el 15 de diciembre. ¿Podrían enviarme los paquetes de precios?',
+    status: 'new',
+    value: 4500,
+    source: 'web',
   },
   {
     id: 2,
-    name: "TechCorp Inc.",
-    email: "events@techcorp.com",
-    phone: "584145550000",
-    company: "Fiesta Corporativa",
-    avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuB0bDgtrKI_TUOe4hWGIwnlE62qmvdCJIb-jSQpQO7tBsLejPgvcvMUuqcxvXciCONgzXRqOXK6u3I_acK66lAwOIxSnQ19Uk9caRnFOOeqpZLvOFKtaVWPug2TmTQXbX62gfI42mKlbqww6NnWn1BfhAXoj6SFRoPAdn530TbmCzFioD_nJ5ccpZYZpot7tbt0wHGhi6co2quJGgO5wc0dnSuOy_EvqhvyIgDvm6v1GtsYh9tBhaHDs7-2w6uXgTZAtCZNt9c_aeyZ",
-    type: "Fiesta Navideña",
-    message: "Estamos interesados en organizar nuestra fiesta anual en su sede. Esperamos alrededor de 150 invitados.",
-    spaceOfInterest: "Salón Ejecutivo",
-    time: "hace 1 h",
-    status: "Replied",
-    statusColor: "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-300",
-    value: 8200
+    createdAt: '2026-10-27T11:05:00.000Z',
+    name: 'TechCorp Inc.',
+    email: 'events@techcorp.com',
+    phone: '+58 414-5550000',
+    eventType: 'Corporativo',
+    eventDate: '2026-11-20',
+    guestsRange: '100 - 150',
+    spaceInterest: 'Salón Ejecutivo',
+    message:
+      'Estamos interesados en organizar nuestra fiesta anual en su sede. Esperamos alrededor de 150 invitados.',
+    status: 'contacted',
+    value: 8200,
+    source: 'web',
   },
   {
     id: 3,
-    name: "Mike Ross",
-    email: "m.ross@law.com",
-    phone: "584249991122",
-    instagram: "mikeross",
-    telegram: "+584249991122",
-    initials: "MR",
-    initialsColor: "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400",
-    type: "Consulta Disponibilidad",
-    message: "Solo confirmando la fecha para el lanzamiento del producto. El contrato ha sido firmado.",
-    time: "hace 1 día",
-    status: "Booked",
-    statusColor: "bg-green-500/10 text-green-500",
-    value: 12500
-  }
+    createdAt: '2026-10-26T18:40:00.000Z',
+    name: 'Mike Ross',
+    email: 'm.ross@law.com',
+    phone: '+58 424-9991122',
+    instagram: 'mikeross',
+    eventType: 'Corporativo',
+    eventDate: '2026-11-05',
+    guestsRange: '50 - 100',
+    spaceInterest: 'El Gran Salón de Baile',
+    message: 'Solo confirmando la fecha para el lanzamiento del producto. El contrato ha sido firmado.',
+    status: 'booked',
+    value: 12500,
+    source: 'web',
+  },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -201,7 +205,7 @@ export const TESTIMONIALS: Testimonial[] = [
     author: "Sarah Jenkins",
     event: "Boda, Oct 2023",
     rating: 5,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCnt4aOss6OtpEcyJqTDlpq9rBo4MxTa_PrkbhePtxD97RIAsaHW4Y-NuMSpb4IW4LW0eJkTRLr5d3ro-qkVnHZR2_QreFDeRAFOfY3zNRJP331JcOB0dLNd3aFzq8xITGy6DTkLTEFZiqG2j-Zz7zKeSkjJZohCf_r7QK0iK-Zh6QOE6tj7ecB3tRzXslhNpSKKp1YPv2sBIGWXZC5jNk78rpRZ82pxk_JAmClpHqQXwNdYPPCTuNeVI2LdGhNbNz-T0-01muPPa41"
+    image: "/images/oxy/img-4c3093b10c97.webp"
   },
   {
     id: 2,
@@ -209,7 +213,7 @@ export const TESTIMONIALS: Testimonial[] = [
     author: "David Chen",
     event: "Gala TechCorp, Dic 2023",
     rating: 5,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB0bDgtrKI_TUOe4hWGIwnlE62qmvdCJIb-jSQpQO7tBsLejPgvcvMUuqcxvXciCONgzXRqOXK6u3I_acK66lAwOIxSnQ19Uk9caRnFOOeqpZLvOFKtaVWPug2TmTQXbX62gfI42mKlbqww6NnWn1BfhAXoj6SFRoPAdn530TbmCzFioD_nJ5ccpZYZpot7tbt0wHGhi6co2quJGgO5wc0dnSuOy_EvqhvyIgDvm6v1GtsYh9tBhaHDs7-2w6uXgTZAtCZNt9c_aeyZ"
+    image: "/images/oxy/img-25597864f1fc.webp"
   }
 ];
 

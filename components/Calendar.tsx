@@ -55,6 +55,9 @@ const Calendar: React.FC<CalendarProps> = ({ events, onDateClick, isAdmin = fals
       if (event?.status === 'booked') {
         statusColor = "bg-red-900/40 border-red-500/30 hover:bg-red-900/60";
         statusText = "Ocupado";
+      } else if (event?.status === 'hold') {
+        statusColor = "bg-amber-900/30 border-amber-500/30 hover:bg-amber-900/50";
+        statusText = "Pre-reserva";
       } else if (event?.status === 'maintenance') {
         statusColor = "bg-gray-700/40 border-gray-500/30";
         statusText = "Mantenimiento";
@@ -79,10 +82,10 @@ const Calendar: React.FC<CalendarProps> = ({ events, onDateClick, isAdmin = fals
           <div className="mt-auto">
              {event ? (
                <>
-                 <span className={`text-[10px] uppercase font-bold tracking-wider block ${event.status === 'booked' ? 'text-red-300' : 'text-gray-300'}`}>
-                    {event.title || statusText}
+                 <span className={`text-[10px] uppercase font-bold tracking-wider block ${event.status === 'booked' ? 'text-red-300' : event.status === 'hold' ? 'text-amber-300' : 'text-gray-300'}`}>
+                    {isAdmin ? (event.title || statusText) : statusText}
                  </span>
-                 {event.timeStart && (
+                 {isAdmin && event.timeStart && (
                     <span className="text-[10px] text-white/70 block mt-0.5 font-mono">
                        {event.timeStart} - {event.timeEnd}
                     </span>

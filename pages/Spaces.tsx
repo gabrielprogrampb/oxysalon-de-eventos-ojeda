@@ -117,7 +117,7 @@ const Spaces: React.FC = () => {
          <div className="relative w-full h-[60vh] min-h-[500px] flex items-end overflow-hidden">
             <div
                className="absolute inset-0 parallax-bg animate-pan-zoom"
-               style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-zXpaBHCbYl8UJYlqygJMGx3gdT0il88hrKtzg-GLoMC2MzD2xrDn1LtKR-LAp9xbNaoJ8V9tr5qNUCbn-Mm-vlzvP2z2Z_WiDqB0Rn8WHxjPTOGhjsmaUAxno-N-yV_yJ-vL5W9nvyyevRJhWSQQJQPtcccUrauG4n3FceztQ1t1obEC9jGnYMi5UN8mkwuBMY-r6XpiYoaMILz414HDQELdxa1p-DtD-ROkiIqFVCBsDprBwyuEz0B59AVAIZLjJExcQiYgv8dt')` }}
+               style={{ backgroundImage: `url('/images/oxy/img-d8408533df3e.webp')` }}
             ></div>
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/70 to-black/30"></div>
 
