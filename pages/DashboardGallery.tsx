@@ -158,7 +158,9 @@ const DashboardGallery: React.FC = () => {
                         cloud_upload
                       </span>
                       <p className="text-xs text-gray-400 font-bold uppercase">Arrastra o haz clic</p>
-                      <p className="text-[10px] text-gray-600 mt-1">JPG, PNG o WEBP · máx. 5 MB</p>
+                      <p className="text-[10px] text-gray-600 mt-1">
+                        JPG, PNG o WEBP · se optimiza automáticamente
+                      </p>
                     </div>
                   )}
                   {uploading && (

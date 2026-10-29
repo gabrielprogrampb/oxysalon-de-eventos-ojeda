@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "check:env": "node scripts/check-env.mjs",
     "images": "node scripts/localize-images.mjs",
-    "capturas": "node scripts/screenshots.mjs"
+    "capturas": "node scripts/screenshots.mjs",
+    "backup": "node scripts/backup-db.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

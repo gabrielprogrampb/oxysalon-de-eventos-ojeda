@@ -8,6 +8,7 @@
  * =============================================================================
  */
 import { supabase, isSupabaseConfigured } from './supabase';
+import { optimizeImage } from './image';
 import { GALLERY_ITEMS, INQUIRIES, MOCK_TRANSACTIONS } from '../../constants';
 import type {
   CalendarEvent,
@@ -330,8 +331,27 @@ export async function deleteGalleryItem(id: number): Promise<void> {
     );
     return;
   }
+
+  // Se borra también el archivo de Storage: si solo se borra la fila, los
+  // archivos quedan huérfanos y consumen cuota para siempre.
+  const { data: row } = await supabase
+    .from('gallery_items')
+    .select('image_url')
+    .eq('id', id)
+    .maybeSingle();
+
+  const storagePath = row?.image_url ? storagePathFromUrl(String(row.image_url)) : null;
+
   const { error } = await supabase.from('gallery_items').delete().eq('id', id);
   if (error) fail('eliminar imagen', error);
+
+  if (storagePath) {
+    const { error: storageError } = await supabase.storage.from('gallery').remove([storagePath]);
+    if (storageError) {
+      // No se interrumpe: la fila ya no existe y el archivo se puede limpiar después.
+      console.warn('[api] no se pudo borrar el archivo de Storage:', storageError.message);
+    }
+  }
 }
 
 export async function likeGalleryItem(id: number): Promise<number> {
@@ -351,34 +371,48 @@ export async function likeGalleryItem(id: number): Promise<number> {
   return Number(data ?? 0);
 }
 
-const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+const MAX_INPUT_BYTES = 12 * 1024 * 1024; // foto de teléfono sin comprimir
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+
+/** Extrae la ruta interna del bucket a partir de una URL pública. */
+function storagePathFromUrl(url: string): string | null {
+  const marker = '/storage/v1/object/public/gallery/';
+  const idx = url.indexOf(marker);
+  if (idx === -1) return null;
+  return decodeURIComponent(url.slice(idx + marker.length).split('?')[0]);
+}
 
 /** Sube una imagen al bucket `gallery` y devuelve la URL pública. */
 export async function uploadGalleryImage(file: File): Promise<string> {
   if (!ALLOWED_TYPES.includes(file.type)) {
     throw new ApiError('Formato no permitido. Usa JPG, PNG, WEBP o AVIF.');
   }
-  if (file.size > MAX_UPLOAD_BYTES) {
-    throw new ApiError('La imagen supera los 5 MB. Comprímela antes de subirla.');
+  if (file.size > MAX_INPUT_BYTES) {
+    throw new ApiError('La imagen supera los 12 MB. Usa una versión más liviana.');
   }
+
+  // Se comprime en el navegador: 4–8 MB → 150–250 KB. Es lo que evita llenar
+  // el 1 GB del plan gratuito con un puñado de fotos.
+  const optimized = await optimizeImage(file);
+
   if (!supabase) {
     // Modo demo: URL temporal del navegador (no persiste tras recargar).
-    return URL.createObjectURL(file);
+    return URL.createObjectURL(optimized);
   }
 
-  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-  const safeName = file.name
-    .replace(/\.[^.]+$/, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .slice(0, 40) || 'imagen';
+  const ext = optimized.type === 'image/webp' ? 'webp' : optimized.name.split('.').pop()?.toLowerCase() || 'jpg';
+  const safeName =
+    optimized.name
+      .replace(/\.[^.]+$/, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .slice(0, 40) || 'imagen';
   const path = `${new Date().getFullYear()}/${Date.now()}-${safeName}.${ext}`;
 
-  const { error } = await supabase.storage.from('gallery').upload(path, file, {
+  const { error } = await supabase.storage.from('gallery').upload(path, optimized, {
     cacheControl: '31536000',
     upsert: false,
-    contentType: file.type,
+    contentType: optimized.type,
   });
   if (error) fail('subir imagen', error);
 

@@ -49,6 +49,7 @@ el panel guardan solo en el navegador de quien lo use. Sirve para revisar diseñ
 | `npm run check:env` | Comprueba que las claves de Supabase existan antes de desplegar |
 | `npm run capturas` | Regenera todas las capturas en `docs/capturas/` (requiere `npm run preview` activo) |
 | `npm run images` | Re-descarga y optimiza imágenes externas a WebP |
+| `npm run backup` | Respaldo JSON de las tablas a `backups/` (requiere service_role) |
 
 ## Estructura
 
@@ -86,6 +87,7 @@ el panel guardan solo en el navegador de quien lo use. Sirve para revisar diseñ
 | Archivo | Contenido |
 |---------|-----------|
 | `docs/PUESTA-EN-MARCHA.md` | Paso a paso para crear las cuentas gratis y publicar |
+| `docs/MANTENIMIENTO.md` | Límites del plan gratis, respaldos y rutina mensual |
 | `docs/PROPUESTA-COMERCIAL.md` | Mensajes de venta, cómo presentar las capturas y objeciones |
 | `docs/MENSAJE-OXY.md` | Versiones cortas del mensaje (WhatsApp, Instagram, correo) |
 | `docs/presentacion.html` | Presentación navegable (abrir en el navegador o guardar como PDF) |

@@ -35,3 +35,6 @@ dist-ssr
 scripts/tmp-oxy
 deploy_files.json
 public/images/oxy/tmp
+
+# Respaldos locales de la base de datos
+backups/

@@ -44,7 +44,8 @@ Guía operativa. Todo lo de aquí es **gratis** (planes free de Supabase y Verce
 1. Menú lateral → **SQL Editor** → *New query*.
 2. Abre el archivo `supabase/migrations/0001_init.sql` de este proyecto, copia **todo** y pégalo.
 3. *Run* (o `Ctrl+Enter`).
-4. Debe decir **Success**. Verifica en **Table Editor** que existan:
+4. Repite con `supabase/migrations/0002_maintenance.sql` (limpieza automática y respaldos).
+5. Debe decir **Success**. Verifica en **Table Editor** que existan:
    `admins`, `inquiries`, `gallery_items`, `transactions`, `calendar_events`, `page_views`.
 
 > El script es idempotente: si algo falla, se puede volver a ejecutar sin romper nada.
@@ -239,6 +240,9 @@ Prueba enviando una solicitud desde el sitio: debe llegar el correo en segundos.
 actividad**. Para un sitio con poco tráfico puede pasar. Solución gratis: crear un monitor en
 **https://uptimerobot.com** que abra el sitio cada 3 días. Si se pausa, se reactiva desde el
 panel de Supabase en un clic (los datos no se pierden).
+
+**Respaldos:** el plan gratuito **no incluye respaldos automáticos**. Hay que ejecutar
+`npm run backup` periódicamente. Ver [`MANTENIMIENTO.md`](MANTENIMIENTO.md).
 
 ---
 
