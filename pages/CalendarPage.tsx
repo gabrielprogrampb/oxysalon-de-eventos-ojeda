@@ -32,7 +32,7 @@ const CalendarPage: React.FC = () => {
       <div className="relative w-full h-[50vh] min-h-[400px] flex items-end">
         <div
           className="absolute inset-0 parallax-bg"
-          style={{ backgroundImage: `url('/images/oxy/img-25597864f1fc.webp')` }}
+          style={{ backgroundImage: `url('/images/oxy/img-928e542805f9.webp')` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-black/30"></div>
 

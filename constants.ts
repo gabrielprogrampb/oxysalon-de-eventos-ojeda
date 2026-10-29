@@ -34,7 +34,7 @@ export const SERVICE_DETAILS = {
     gallery: [
       "/images/oxy/img-f54ceb1e4977.webp",
       "/images/oxy/img-507d9b401ccc.webp",
-      "/images/oxy/img-d8408533df3e.webp"
+      "/images/oxy/img-928e542805f9.webp"
     ]
   },
   bar: {
@@ -51,7 +51,7 @@ export const SERVICE_DETAILS = {
     gallery: [
       "/images/oxy/img-e44d09aa75df.webp",
       "/images/oxy/img-aa62b78e00a6.webp",
-      "/images/oxy/img-25597864f1fc.webp"
+      "/images/oxy/img-903bf12d1b34.webp"
     ]
   }
 };
@@ -72,7 +72,7 @@ export const SPACES: Space[] = [
   {
     id: 4,
     name: "Salón Ejecutivo",
-    image: "/images/oxy/img-d8408533df3e.webp",
+    image: "/images/oxy/img-606b588fd0cd.webp",
     price: "$$",
     guests: 50,
     sqft: 1200,
@@ -111,7 +111,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 4,
-    image: "/images/oxy/img-369b9401311e.webp",
+    image: "/images/oxy/img-928e542805f9.webp",
     title: "Iluminación Escénica",
     category: "Tecnología",
     type: "wide",
@@ -149,11 +149,11 @@ export const INQUIRIES: Inquiry[] = [
   {
     id: 1,
     createdAt: '2026-10-27T14:32:00.000Z',
-    name: 'Sarah Jenkins',
-    email: 'sarah.j@example.com',
+    name: 'María González',
+    email: 'maria.gonzalez@example.com',
     phone: '+58 412-1234567',
-    instagram: 'sarahjenkins',
-    telegram: 'sarah_events',
+    instagram: 'maria.gonzalez',
+    telegram: 'maria_gonzalez',
     eventType: 'Boda',
     eventDate: '2026-12-15',
     guestsRange: '150 - 250',
@@ -167,15 +167,15 @@ export const INQUIRIES: Inquiry[] = [
   {
     id: 2,
     createdAt: '2026-10-27T11:05:00.000Z',
-    name: 'TechCorp Inc.',
-    email: 'events@techcorp.com',
+    name: 'Corporación Andina C.A.',
+    email: 'eventos@corpoandina.com',
     phone: '+58 414-5550000',
     eventType: 'Corporativo',
     eventDate: '2026-11-20',
     guestsRange: '100 - 150',
     spaceInterest: 'Salón Ejecutivo',
     message:
-      'Estamos interesados en organizar nuestra fiesta anual en su sede. Esperamos alrededor de 150 invitados.',
+      'Estamos interesados en organizar nuestra fiesta de fin de año en su sede. Esperamos alrededor de 150 invitados.',
     status: 'contacted',
     value: 8200,
     source: 'web',
@@ -183,15 +183,15 @@ export const INQUIRIES: Inquiry[] = [
   {
     id: 3,
     createdAt: '2026-10-26T18:40:00.000Z',
-    name: 'Mike Ross',
-    email: 'm.ross@law.com',
+    name: 'Carlos Pérez',
+    email: 'carlos.perez@example.com',
     phone: '+58 424-9991122',
-    instagram: 'mikeross',
+    instagram: 'carlosperez',
     eventType: 'Corporativo',
     eventDate: '2026-11-05',
     guestsRange: '50 - 100',
     spaceInterest: 'El Gran Salón de Baile',
-    message: 'Solo confirmando la fecha para el lanzamiento del producto. El contrato ha sido firmado.',
+    message: 'Solo confirmando la fecha para el lanzamiento del producto. El anticipo ya fue transferido.',
     status: 'booked',
     value: 12500,
     source: 'web',
@@ -218,8 +218,8 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 export const MOCK_TRANSACTIONS: Transaction[] = [
-  { id: 1, title: 'Pago Inicial Boda S.J.', amount: 4500, type: 'income', category: 'Reservas', date: '2026-05-15', status: 'completed' },
-  { id: 2, title: 'Compra Flores Importadas', amount: 1200, type: 'expense', category: 'Materiales', date: '2026-05-14', status: 'completed' },
-  { id: 3, title: 'Mantenimiento Luces', amount: 350, type: 'expense', category: 'Mantenimiento', date: '2026-05-12', status: 'completed' },
-  { id: 4, title: 'Evento Corp. TechCorp', amount: 8200, type: 'income', category: 'Eventos', date: '2026-05-10', status: 'completed' }
+  { id: 1, title: 'Anticipo boda M. González', amount: 4500, type: 'income', category: 'Reservas', date: '2026-10-27', status: 'completed' },
+  { id: 2, title: 'Flores y mantelería', amount: 1200, type: 'expense', category: 'Materiales', date: '2026-10-25', status: 'completed' },
+  { id: 3, title: 'Mantenimiento de iluminación', amount: 350, type: 'expense', category: 'Mantenimiento', date: '2026-10-22', status: 'completed' },
+  { id: 4, title: 'Evento Corporación Andina', amount: 8200, type: 'income', category: 'Eventos', date: '2026-10-20', status: 'completed' },
 ];

@@ -132,7 +132,7 @@ const Booking: React.FC = () => {
     <div className="relative font-display min-h-screen flex flex-col overflow-x-hidden text-white">
       <div
         className="fixed inset-0 parallax-bg z-0 animate-pan-zoom"
-        style={{ backgroundImage: `url('/images/oxy/img-369b9401311e.webp')` }}
+        style={{ backgroundImage: `url('/images/oxy/img-903bf12d1b34.webp')` }}
       />
       <div className="fixed inset-0 bg-[#0f0b18]/85 backdrop-blur-[2px] z-0"></div>
       <div className="fixed top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] opacity-40 z-0 pointer-events-none"></div>

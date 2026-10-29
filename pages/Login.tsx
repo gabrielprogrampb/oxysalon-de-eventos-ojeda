@@ -58,7 +58,7 @@ const Login: React.FC = () => {
       {/* Fondo */}
       <div
         className="absolute inset-0 parallax-bg z-0 opacity-40 blur-sm"
-        style={{ backgroundImage: `url("/images/oxy/img-4c3093b10c97.webp")` }}
+        style={{ backgroundImage: `url("/images/oxy/img-606b588fd0cd.webp")` }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent z-10"></div>
 

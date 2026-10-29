@@ -45,7 +45,10 @@ el panel guardan solo en el navegador de quien lo use. Sirve para revisar diseñ
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Build de producción en `dist/` |
 | `npm run preview` | Sirve el build local para revisarlo |
-| `node scripts/localize-images.mjs` | Re-descarga y optimiza imágenes externas a WebP |
+| `npm run typecheck` | Verifica tipos sin compilar |
+| `npm run check:env` | Comprueba que las claves de Supabase existan antes de desplegar |
+| `npm run capturas` | Regenera todas las capturas en `docs/capturas/` (requiere `npm run preview` activo) |
+| `npm run images` | Re-descarga y optimiza imágenes externas a WebP |
 
 ## Estructura
 
@@ -77,6 +80,16 @@ el panel guardan solo en el navegador de quien lo use. Sirve para revisar diseñ
 - **Subida de imágenes** validada por tipo y tamaño (máx. 5 MB), con bucket de escritura solo para admin.
 - **Headers:** CSP, HSTS, Permissions-Policy, `noindex` en `/dashboard` y `/login`.
 - **Anti-spam** en el formulario: honeypot + validación temporal + límites de longitud en la base.
+
+## Documentación y material comercial
+
+| Archivo | Contenido |
+|---------|-----------|
+| `docs/PUESTA-EN-MARCHA.md` | Paso a paso para crear las cuentas gratis y publicar |
+| `docs/PROPUESTA-COMERCIAL.md` | Mensajes de venta, cómo presentar las capturas y objeciones |
+| `docs/MENSAJE-OXY.md` | Versiones cortas del mensaje (WhatsApp, Instagram, correo) |
+| `docs/presentacion.html` | Presentación navegable (abrir en el navegador o guardar como PDF) |
+| `docs/capturas/` | 31 capturas del build de producción (escritorio y móvil) |
 
 ## Licencia
 

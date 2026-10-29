@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Oxysalon de Eventos Ojeda — Presentación del proyecto</title>
+<style>
+  :root{
+    --bg:#0f0b18; --panel:#171122; --panel2:#1f1830; --line:rgba(255,255,255,.09);
+    --text:#f5f3ef; --muted:#a49cb5; --gold:#d4af37; --violet:#7c3aed; --green:#34d399;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+  h1,h2,h3{line-height:1.15;letter-spacing:-.02em}
+  h2{font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:12px}
+  h3{font-size:1.05rem;margin-bottom:6px}
+  p{color:var(--muted)}
+  .eyebrow{
+    color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.22em;
+    text-transform:uppercase;margin-bottom:14px;display:block;
+  }
+
+  /* Portada */
+  .cover{
+    min-height:88vh;display:flex;align-items:flex-end;position:relative;
+    background:url('capturas/fondo-portada.jpg') center 35%/cover no-repeat;
+    border-bottom:1px solid var(--line);
+  }
+  .cover::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(to top,#0f0b18 6%,rgba(15,11,24,.9) 42%,rgba(15,11,24,.55) 100%);
+  }
+  .cover .wrap{position:relative;z-index:2;padding-bottom:64px;padding-top:64px}
+  .cover h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;max-width:16ch}
+  .cover h1 span{color:var(--gold);font-weight:300}
+  .cover .sub{font-size:clamp(1rem,2vw,1.25rem);color:#d8d3e0;max-width:52ch;margin-top:18px}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .badge{
+    border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;
+    padding:7px 15px;font-size:.78rem;font-weight:600;color:#e6e2ee;backdrop-filter:blur(6px);
+  }
+  .badge b{color:var(--gold)}
+
+  /* Grids */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;
+  }
+  .card .ico{font-size:1.4rem;margin-bottom:10px;display:block}
+  .card p{font-size:.92rem}
+  .num{color:var(--gold);font-weight:800;font-size:.8rem;letter-spacing:.12em}
+
+  /* Capturas */
+  figure{margin:0}
+  figure img{
+    width:100%;display:block;border-radius:12px;border:1px solid var(--line);
+    background:#000;
+  }
+  figcaption{
+    font-size:.78rem;color:var(--muted);margin-top:9px;display:flex;gap:8px;align-items:baseline;
+  }
+  figcaption b{color:var(--text);font-weight:600;font-size:.82rem}
+  .stack{display:grid;gap:34px}
+  .two{display:grid;gap:24px;grid-template-columns:1fr 1fr}
+  .phones{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));align-items:start}
+  .phones img{max-width:100%}
+
+  /* Tabla */
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:8px}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line)}
+  th{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em}
+  td:last-child{color:var(--text);font-weight:600}
+  tr:last-child td{border-bottom:0}
+
+  /* Cierre */
+  .cta{
+    background:linear-gradient(135deg,#1b1330,#241a3d);border:1px solid var(--line);
+    border-radius:20px;padding:40px;
+  }
+  .cta h2{margin-bottom:10px}
+  .btn{
+    display:inline-block;margin-top:22px;background:var(--gold);color:#14101c;
+    font-weight:800;padding:14px 28px;border-radius:999px;text-decoration:none;font-size:.92rem;
+  }
+  .note{font-size:.8rem;color:#7d7590;margin-top:14px}
+  ul{list-style:none}
+  ul li{position:relative;padding-left:22px;margin-bottom:9px;color:var(--muted);font-size:.93rem}
+  ul li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+  .kpi{display:flex;gap:36px;flex-wrap:wrap;margin-top:26px}
+  .kpi div{min-width:120px}
+  .kpi strong{display:block;font-size:1.9rem;color:var(--text);line-height:1}
+  .kpi span{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+
+  @media (max-width:720px){
+    .two{grid-template-columns:1fr}
+    section{padding:52px 0}
+  }
+  @media print{
+    body{background:#fff;color:#111}
+    .cover{min-height:auto;page-break-after:always}
+    section{page-break-inside:avoid;border-color:#ddd}
+    figure img{border-color:#ddd}
+    h2,p,li,td{color:#222}
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<header class="cover">
+  <div class="wrap">
+    <span class="eyebrow">Propuesta de sitio web · Ciudad Ojeda, Zulia</span>
+    <h1>Oxysalon<br><span>de Eventos Ojeda</span></h1>
+    <p class="sub">
+      Un sitio web propio que muestra el salón, publica la disponibilidad real y recibe
+      solicitudes de cotización ordenadas. Sin depender de mensajes directos ni de hojas de cálculo.
+    </p>
+    <div class="badges">
+      <span class="badge">100% listo para producción</span>
+      <span class="badge"><b>Costo mensual: 0 USD</b></span>
+      <span class="badge">Diseño adaptable a móvil</span>
+      <span class="badge">Panel administrativo incluido</span>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEMA / SOLUCIÓN -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">El punto de partida</span>
+    <h2>Hoy el salón vive en Instagram.<br>Y eso tiene un costo.</h2>
+    <p style="max-width:65ch">
+      Las consultas llegan por mensaje directo, se cruzan entre conversaciones y la disponibilidad
+      se responde una por una. El cliente que quería reservar el 15 espera horas por una respuesta,
+      y mientras espera sigue buscando otros salones.
+    </p>
+
+    <div class="grid g3" style="margin-top:36px">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>La consulta se pierde</h3>
+        <p>Un mensaje sin responder a tiempo es una fecha que se va a otro salón.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>La fecha se responde dos veces</h3>
+        <p>Sin una agenda central, dos personas pueden apartar el mismo día.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>El trabajo no se ve</h3>
+        <p>Las mejores fotos del salón quedan enterradas en el feed.</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:26px">
+      <div class="card" style="border-color:rgba(212,175,55,.35)">
+        <h3 style="color:var(--gold)">La solución</h3>
+        <ul>
+          <li>Un sitio propio que presenta el salón como se merece.</li>
+          <li>Calendario público: el cliente ve qué días están libres.</li>
+          <li>Formulario que registra cada solicitud con fecha, tipo de evento e invitados.</li>
+          <li>Un panel privado donde todo llega ordenado.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Qué cambia en el día a día</h3>
+        <ul>
+          <li>Se responde con datos, no con “déjame ver”.</li>
+          <li>Ninguna solicitud se pierde en el chat.</li>
+          <li>La agenda la controla el salón, no el azar.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECORRIDO PÚBLICO -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Recorrido del cliente</span>
+    <h2>Lo primero que ve quien quiere celebrar</h2>
+    <p style="max-width:60ch;margin-bottom:36px">
+      Portada con impacto, espacios con capacidad y precio orientativo, servicios detallados y una
+      galería que vende sola.
+    </p>
+
+    <div class="stack">
+      <figure>
+        <img src="capturas/01-home-portada.jpg" alt="Portada del sitio" loading="lazy" />
+        <figcaption><b>Portada</b> · mensaje claro, llamada a la acción visible y navegación inmediata.</figcaption>
+      </figure>
+
+      <div class="two">
+        <figure>
+          <img src="capturas/10-espacios.jpg" alt="Espacios" loading="lazy" />
+          <figcaption><b>Espacios</b> · capacidad, metros y características de cada salón.</figcaption>
+        </figure>
+        <figure>
+          <img src="capturas/03-home-servicios.jpg" alt="Servicios" loading="lazy" />
+          <figcaption><b>Servicios</b> · decoración, gastronomía, sonido y barra.</figcaption>
+        </figure>
+      </div>
+
+      <div class="two">
+        <figure>
+          <img src="capturas/07-servicio-decoracion.jpg" alt="Detalle de servicio" loading="lazy" />
+          <figcaption><b>Detalle de servicio</b> · cada servicio con su propia página.</figcaption>
+        </figure>
+        <figure>
+          <img src="capturas/11-galeria.jpg" alt="Galería" loading="lazy" />
+          <figcaption><b>Galería</b> · filtros por categoría y visor a pantalla completa.</figcaption>
+        </figure>
+      </div>
+
+      <div class="two">
+        <figure>
+          <img src="capturas/13b-agenda-mes.jpg" alt="Agenda pública" loading="lazy" />
+          <figcaption><b>Disponibilidad</b> · el cliente ve ocupado, pre-reserva y libre antes de escribir.</figcaption>
+        </figure>
+        <figure>
+          <img src="capturas/14-reserva.jpg" alt="Formulario de reserva" loading="lazy" />
+          <figcaption><b>Solicitud de cotización</b> · un solo formulario, todos los datos de una vez.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="phones" style="margin-top:40px">
+      <figure>
+        <img src="capturas/26-movil-portada.jpg" alt="Portada en móvil" loading="lazy" />
+        <figcaption><b>Móvil</b></figcaption>
+      </figure>
+      <figure>
+        <img src="capturas/28-movil-galeria.jpg" alt="Galería en móvil" loading="lazy" />
+        <figcaption><b>Galería</b></figcaption>
+      </figure>
+      <figure>
+        <img src="capturas/29-movil-reserva.jpg" alt="Reserva en móvil" loading="lazy" />
+        <figcaption><b>Reserva</b></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Del lado del salón</span>
+    <h2>El panel: todo lo que entra, en un solo lugar</h2>
+    <p style="max-width:62ch;margin-bottom:36px">
+      Acceso privado desde el teléfono o la computadora. Sin instalar nada, sin depender de nadie.
+    </p>
+
+    <div class="stack">
+      <figure>
+        <img src="capturas/18-panel-resumen.jpg" alt="Panel de resumen" loading="lazy" />
+        <figcaption><b>Resumen</b> · solicitudes nuevas, próximos eventos, visitas y reservas cerradas.</figcaption>
+      </figure>
+
+      <div class="two">
+        <figure>
+          <img src="capturas/20-panel-buzon.jpg" alt="Buzón de solicitudes" loading="lazy" />
+          <figcaption><b>Buzón</b> · cada solicitud con su estado: nuevo, contactado, cotizado, reservado.</figcaption>
+        </figure>
+        <figure>
+          <img src="capturas/21-panel-solicitud.jpg" alt="Detalle de solicitud" loading="lazy" />
+          <figcaption><b>Detalle</b> · datos completos, valor cotizado y notas internas.</figcaption>
+        </figure>
+      </div>
+
+      <div class="two">
+        <figure>
+          <img src="capturas/19-panel-agenda.jpg" alt="Agenda administrativa" loading="lazy" />
+          <figcaption><b>Agenda</b> · bloquear o liberar fechas con dos toques.</figcaption>
+        </figure>
+        <figure>
+          <img src="capturas/22-panel-finanzas.jpg" alt="Finanzas" loading="lazy" />
+          <figcaption><b>Finanzas</b> · ingresos, gastos y balance del mes.</figcaption>
+        </figure>
+      </div>
+
+      <div class="two">
+        <figure>
+          <img src="capturas/24-panel-galeria.jpg" alt="Gestión de galería" loading="lazy" />
+          <figcaption><b>Galería</b> · subir, ocultar o destacar fotos sin ayuda técnica.</figcaption>
+        </figure>
+        <figure>
+          <img src="capturas/25-panel-subir-imagen.jpg" alt="Subir imagen" loading="lazy" />
+          <figcaption><b>Subida de fotos</b> · desde el teléfono, con vista previa.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍA -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Por dentro</span>
+    <h2>Tecnología moderna, sin letra pequeña</h2>
+
+    <div class="grid g3" style="margin-top:32px">
+      <div class="card">
+        <span class="ico">⚛️</span>
+        <h3>React 19 + Vite 6</h3>
+        <p>La misma base que usan las plataformas grandes: rápida, estable y fácil de mantener.</p>
+      </div>
+      <div class="card">
+        <span class="ico">🗄️</span>
+        <h3>Supabase</h3>
+        <p>Base de datos, inicio de sesión y almacenamiento de fotos en un servicio profesional.</p>
+      </div>
+      <div class="card">
+        <span class="ico">🔒</span>
+        <h3>Seguridad real</h3>
+        <p>Acceso verificado, permisos por fila y datos que solo ve el salón.</p>
+      </div>
+      <div class="card">
+        <span class="ico">📱</span>
+        <h3>Diseño adaptable</h3>
+        <p>Se ve bien en teléfono, tableta y computadora. Sin apps que instalar.</p>
+      </div>
+      <div class="card">
+        <span class="ico">🔍</span>
+        <h3>Preparado para Google</h3>
+        <p>Estructura, metadatos y ficha de negocio local listos para posicionar.</p>
+      </div>
+      <div class="card">
+        <span class="ico">💸</span>
+        <h3>Costo de operación cero</h3>
+        <p>Hosting y base de datos en planes gratuitos. No hay mensualidad de servidor.</p>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div><strong>0 USD</strong><span>costo mensual</span></div>
+      <div><strong>~1 s</strong><span>carga del sitio</span></div>
+      <div><strong>24/7</strong><span>recibiendo solicitudes</span></div>
+      <div><strong>100%</strong><span>desde el móvil</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COSTOS -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Transparencia</span>
+    <h2>Qué cuesta mantenerlo</h2>
+    <table>
+      <thead>
+        <tr><th>Concepto</th><th>Plan</th><th>Costo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hosting del sitio</td><td>Vercel · plan gratuito</td><td>0 USD/mes</td></tr>
+        <tr><td>Base de datos y accesos</td><td>Supabase · plan gratuito</td><td>0 USD/mes</td></tr>
+        <tr><td>Almacenamiento de fotos</td><td>Supabase · 1 GB incluido</td><td>0 USD/mes</td></tr>
+        <tr><td>Avisos por correo (opcional)</td><td>Resend · 100 correos/día</td><td>0 USD/mes</td></tr>
+        <tr><td>Dominio propio (opcional)</td><td>Registro anual</td><td>≈10–12 USD/año</td></tr>
+      </tbody>
+    </table>
+    <p class="note">
+      Los planes gratuitos cubren con holgura el tráfico de un salón de eventos. Si el negocio crece,
+      la actualización se hace sin cambiar nada del sitio.
+    </p>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section style="border-bottom:0">
+  <div class="wrap">
+    <div class="cta">
+      <span class="eyebrow">Siguiente paso</span>
+      <h2>Verlo funcionando toma 10 minutos</h2>
+      <p style="max-width:58ch">
+        Con los datos reales del salón (teléfono, WhatsApp, redes) y las fotos definitivas, el sitio
+        queda publicado y recibiendo solicitudes. El resto es entrenamiento: quién responde, cómo se
+        marcan los estados y cómo se bloquea una fecha.
+      </p>
+      <a class="btn" href="#top">Agendar demostración</a>
+      <p class="note">
+        Documento de presentación del proyecto. Las capturas corresponden a la versión de producción
+        con contenido de ejemplo; las fotos y los datos de contacto definitivos los aporta el salón.
+      </p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

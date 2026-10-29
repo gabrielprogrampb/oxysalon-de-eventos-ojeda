@@ -169,7 +169,7 @@ const Home: React.FC = () => {
                     {
                       icon: 'restaurant_menu',
                       label: 'Gastronomía',
-                      image: '/images/oxy/img-25597864f1fc.webp'
+                      image: '/images/oxy/img-369b9401311e.webp'
                     },
                     {
                       icon: 'music_note',

@@ -3,8 +3,8 @@ import type { InquiryStatus } from '../../types';
 export const STATUS_META: Record<InquiryStatus, { label: string; badge: string; dot: string }> = {
   new: {
     label: 'Nuevo',
-    badge: 'bg-primary/20 text-primary border-primary/30',
-    dot: 'bg-primary',
+    badge: 'bg-gold/15 text-gold border-gold/40',
+    dot: 'bg-gold',
   },
   contacted: {
     label: 'Contactado',
