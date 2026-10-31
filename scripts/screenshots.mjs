@@ -186,6 +186,13 @@ async function main() {
   await go('/services');
   await capture('06-servicios');
 
+  // Tarjetas de servicio: aquí se ve "Animación y Entretenimiento"
+  await page.evaluate(() => {
+    const el = [...document.querySelectorAll('h3')].find((h) => h.textContent?.includes('Barra Libre'));
+    el?.scrollIntoView({ block: 'center', behavior: 'instant' });
+  });
+  await capture('06b-servicios-tarjetas', { wait: 900 });
+
   await go('/services/decor');
   await capture('07-servicio-decoracion');
 
@@ -227,6 +234,12 @@ async function main() {
 
   await go('/booking');
   await capture('14-reserva');
+
+  // Campo "Sede del evento" (Ojeda / Cabimas / Maracaibo)
+  await page.evaluate(() => {
+    document.querySelector('#venue')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+  });
+  await capture('14b-reserva-sede', { wait: 800 });
 
   await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
   await capture('15-reserva-contacto', { wait: 900 });
