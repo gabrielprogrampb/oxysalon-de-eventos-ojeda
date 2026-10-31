@@ -57,6 +57,51 @@ const DEMO_CALENDAR = [
 const shots = [];
 let page;
 
+/**
+ * Galería de demostración: el primer tema lleva tres fotos para que el visor
+ * muestre flechas, puntos y contador. Los demás van con una sola.
+ */
+const DEMO_GALLERY = [
+  {
+    id: 1,
+    image: '/images/oxy/img-31000bf958a9.webp',
+    title: 'Montaje de Mesa',
+    category: 'Bodas',
+    type: 'wide',
+    likes: 18,
+    published: true,
+    photos: [
+      {
+        id: 11, itemId: 1, sortOrder: 0,
+        image: '/images/oxy/img-31000bf958a9.webp',
+        title: 'Mesa principal',
+        description: 'Montaje para 120 invitados con candelabros y flores naturales.',
+        alt: 'Mesa principal decorada con candelabros',
+      },
+      {
+        id: 12, itemId: 1, sortOrder: 1,
+        image: '/images/oxy/img-20dd57a02f43.webp',
+        title: 'Ambientación floral',
+        description: 'Centros de mesa con flores de temporada incluidas en el servicio.',
+        alt: 'Centros de mesa con flores',
+      },
+      {
+        id: 13, itemId: 1, sortOrder: 2,
+        image: '/images/oxy/img-369b9401311e.webp',
+        title: 'Detalle de vajilla',
+        description: 'Cristalería, cubertería y mantelería fina para cada invitado.',
+        alt: 'Detalle de vajilla y cristalería',
+      },
+    ],
+  },
+  { id: 2, image: '/images/oxy/img-507d9b401ccc.webp', title: 'Cena de Gala', category: 'Corporativo', type: 'square', likes: 9, published: true },
+  { id: 3, image: '/images/oxy/img-25597864f1fc.webp', title: 'Detalles Florales', category: 'Decoración', type: 'tall', likes: 14, published: true },
+  { id: 4, image: '/images/oxy/img-4c3093b10c97.webp', title: 'Iluminación Escénica', category: 'Tecnología', type: 'wide', likes: 21, published: true },
+  { id: 5, image: '/images/oxy/img-606b588fd0cd.webp', title: 'Cocktail Bar', category: 'Bebidas', type: 'square', likes: 7, published: true },
+  { id: 6, image: '/images/oxy/img-928e542805f9.webp', title: 'Salón Principal', category: 'Salones', type: 'wide', likes: 25, published: true },
+  { id: 7, image: '/images/oxy/img-aa62b78e00a6.webp', title: 'Terraza Exterior', category: 'Exterior', type: 'tall', likes: 11, published: true },
+];
+
 async function capture(name, { fullPage = false, hideDemoBanner = false, wait = 900 } = {}) {
   if (hideDemoBanner) {
     await page.evaluate(() => {
@@ -102,11 +147,12 @@ async function main() {
     viewport: { width: 1440, height: 900 },
     deviceScaleFactor: 1,
   });
-  await desktop.addInitScript((calendar) => {
+  await desktop.addInitScript(({ calendar, gallery }) => {
     localStorage.setItem('oxy_demo_calendar', JSON.stringify(calendar));
+    localStorage.setItem('oxy_demo_gallery', JSON.stringify(gallery));
     localStorage.setItem('oxy_demo_session', 'true');
     localStorage.setItem('oxy_demo_views', '1284');
-  }, DEMO_CALENDAR);
+  }, { calendar: DEMO_CALENDAR, gallery: DEMO_GALLERY });
   page = await desktop.newPage();
 
   console.log('PÚBLICO');
@@ -202,8 +248,8 @@ async function main() {
   // ---------------------------------------------------------------- PANEL
   console.log('\nPANEL ADMINISTRATIVO');
 
-  await go('/dashboard');
-  if (!page.url().includes('/dashboard')) {
+  await go('/admin');
+  if (!page.url().includes('/admin')) {
     // Modo demo con sesión ya inyectada; si redirige, se entra manualmente
     await go('/login');
     await page.fill('#login-email', 'demo@oxysalon.com');
@@ -213,38 +259,57 @@ async function main() {
   }
   await capture('18-panel-resumen', { hideDemoBanner: true, wait: 1200 });
 
-  const tab = async (label) => {
-    const btn = page.locator(`button:has-text("${label}")`).first();
-    if (await btn.count()) {
-      await btn.click();
+  // La barra lateral usa enlaces (NavLink), no botones.
+  const nav = async (label) => {
+    const link = page.locator(`a:has-text("${label}")`).first();
+    if (await link.count()) {
+      await link.click();
       await page.waitForTimeout(900);
       return true;
     }
     return false;
   };
 
-  if (await tab('Agenda')) await capture('19-panel-agenda', { hideDemoBanner: true, wait: 900 });
-  if (await tab('Buzón')) await capture('20-panel-buzon', { hideDemoBanner: true, wait: 900 });
+  if (await nav('Agenda')) await capture('19-panel-agenda', { hideDemoBanner: true, wait: 900 });
 
-  // Detalle de una solicitud
-  const row = page.locator('tbody tr').first();
-  if (await row.count()) {
-    await row.click();
-    await page.waitForTimeout(1200);
-    await capture('21-panel-solicitud', { hideDemoBanner: true, wait: 800 });
-    await go('/dashboard');
+  // Buzón = Solicitudes
+  if (await nav('Solicitudes')) {
+    await capture('20-panel-buzon', { hideDemoBanner: true, wait: 900 });
+
+    // Detalle de una solicitud
+    const row = page.locator('tbody tr').first();
+    if (await row.count()) {
+      await row.click();
+      await page.waitForTimeout(1200);
+      await capture('21-panel-solicitud', { hideDemoBanner: true, wait: 800 });
+      await go('/admin');
+    }
   }
 
-  if (await tab('Finanzas')) await capture('22-panel-finanzas', { hideDemoBanner: true, wait: 900 });
+  if (await nav('Finanzas')) {
+    await capture('22-panel-finanzas', { hideDemoBanner: true, wait: 900 });
 
-  await go('/dashboard/finance/new');
-  await capture('23-panel-nueva-transaccion', { hideDemoBanner: true, wait: 800 });
+    // El alta de movimiento es un modal, no una ruta aparte.
+    const newTx = page.getByRole('button', { name: /nuevo movimiento/i }).first();
+    if (await newTx.count()) {
+      await newTx.click();
+      await capture('23-panel-nueva-transaccion', { hideDemoBanner: true, wait: 800 });
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(400);
+    }
+  }
 
-  await go('/dashboard');
-  if (await tab('Galería')) await capture('24-panel-galeria', { hideDemoBanner: true, wait: 1000 });
+  if (await nav('Galería')) {
+    await capture('24-panel-galeria', { hideDemoBanner: true, wait: 1000 });
 
-  await go('/dashboard/gallery/new');
-  await capture('25-panel-subir-imagen', { hideDemoBanner: true, wait: 800 });
+    const newTheme = page.getByRole('button', { name: /nuevo tema/i }).first();
+    if (await newTheme.count()) {
+      await newTheme.click();
+      await capture('25-panel-subir-imagen', { hideDemoBanner: true, wait: 800 });
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(400);
+    }
+  }
 
   // ---------------------------------------------------------------- MÓVIL
   console.log('\nMÓVIL');
@@ -255,10 +320,11 @@ async function main() {
     isMobile: true,
     hasTouch: true,
   });
-  await mobile.addInitScript((calendar) => {
+  await mobile.addInitScript(({ calendar, gallery }) => {
     localStorage.setItem('oxy_demo_calendar', JSON.stringify(calendar));
+    localStorage.setItem('oxy_demo_gallery', JSON.stringify(gallery));
     localStorage.setItem('oxy_demo_session', 'true');
-  }, DEMO_CALENDAR);
+  }, { calendar: DEMO_CALENDAR, gallery: DEMO_GALLERY });
   page = await mobile.newPage();
 
   await go('/');
@@ -278,7 +344,7 @@ async function main() {
   await go('/booking');
   await capture('29-movil-reserva', { wait: 800 });
 
-  await go('/dashboard');
+  await go('/admin');
   await capture('30-movil-panel', { hideDemoBanner: true, wait: 1200 });
 
   await browser.close();

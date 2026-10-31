@@ -2,6 +2,9 @@
 
 Material listo para enviar. Tres piezas: **mensaje**, **capturas** y **presentación**.
 
+> Para el precio, la forma de pago y las respuestas a "está caro", ver
+> **[`PRECIOS-Y-CIERRE.md`](PRECIOS-Y-CIERRE.md)**.
+
 ---
 
 ## 1. El mensaje principal (WhatsApp)

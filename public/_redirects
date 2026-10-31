@@ -1,0 +1,12 @@
+# Fallback de aplicación de una sola página (SPA) para Netlify y Cloudflare Pages.
+#
+# Sin esto, al recargar /admin o /galeria el servidor busca un archivo con ese
+# nombre, no lo encuentra y devuelve 404. La regla manda todo a index.html con
+# estado 200 para que React Router resuelva la ruta.
+#
+# Los archivos estáticos reales (assets, imágenes) tienen prioridad sobre esta
+# regla en ambas plataformas, así que no interfiere con ellos.
+#
+# Vercel NO usa este archivo: allí lo resuelve `rewrites` en vercel.json.
+
+/*    /index.html   200

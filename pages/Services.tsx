@@ -58,7 +58,7 @@ const Services: React.FC = () => {
                   <span className="material-symbols-outlined text-3xl">{facility.icon}</span>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">{facility.title}</h3>
+                  <h2 className="text-lg font-bold text-white">{facility.title}</h2>
                   <p className="text-xs text-gray-400 uppercase tracking-wide mt-1 group-hover:text-white/70">{facility.sub}</p>
                 </div>
               </div>

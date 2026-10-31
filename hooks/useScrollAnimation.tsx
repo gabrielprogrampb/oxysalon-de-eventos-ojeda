@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 // Hook personalizado para Intersection Observer
-export const useIntersectionObserver = (options = {}) => {
+export const useIntersectionObserver = ({
+    threshold = 0.1,
+    rootMargin = '0px',
+}: IntersectionObserverInit = {}) => {
     const [isVisible, setIsVisible] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -11,14 +14,14 @@ export const useIntersectionObserver = (options = {}) => {
                 setIsVisible(true);
                 observer.disconnect(); // Solo animar una vez
             }
-        }, { threshold: 0.1, ...options });
+        }, { threshold, rootMargin });
 
         if (ref.current) {
             observer.observe(ref.current);
         }
 
         return () => observer.disconnect();
-    }, []);
+    }, [threshold, rootMargin]);
 
     return { ref, isVisible };
 };

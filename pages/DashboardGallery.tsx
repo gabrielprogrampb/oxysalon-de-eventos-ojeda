@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { GalleryItem, GalleryType } from '../types';
+import type { GalleryType } from '../types';
 import { createGalleryItem, getGalleryItem, updateGalleryItem, uploadGalleryImage } from '../src/lib/store';
 import { GALLERY_CATEGORIES, GALLERY_TYPES } from '../src/lib/constants';
 

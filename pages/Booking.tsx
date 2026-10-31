@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SPACES } from '../constants';
 import { AnimateOnScroll } from '../hooks/useScrollAnimation';
 import { createInquiry } from '../src/lib/store';
+import { isHoneypotTripped, isSubmissionTooFast, isValid, validateInquiry } from '../src/lib/validation';
 import { SITE, whatsappLink, hasPhone, telLink, hasEmail, mailLink, hasWhatsApp, socialLinks } from '../src/config/site';
 
 const EVENT_TYPES = ['Boda', '15 Años', 'Corporativo', 'Cumpleaños', 'Bautizo / Primera Comunión', 'Otro'];
@@ -64,18 +65,19 @@ const Booking: React.FC = () => {
   };
 
   const validate = (): boolean => {
-    const next: Partial<Record<keyof FormState, string>> = {};
-
-    if (form.name.trim().length < 3) next.name = 'Escribe tu nombre completo.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim()))
-      next.email = 'Escribe un correo válido.';
-    const digits = form.phone.replace(/[^\d]/g, '');
-    if (digits.length < 7) next.phone = 'Escribe un teléfono válido (incluye el código de área).';
-    if (form.eventDate && form.eventDate < today) next.eventDate = 'La fecha ya pasó. Elige una fecha futura.';
-    if (!form.consent) next.consent = 'Debes autorizar el contacto para enviar la solicitud.';
+    const next = validateInquiry(
+      {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        eventDate: form.eventDate,
+        consent: form.consent,
+      },
+      today
+    );
 
     setErrors(next);
-    return Object.keys(next).length === 0;
+    return isValid(next);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -83,8 +85,8 @@ const Booking: React.FC = () => {
     setServerError('');
 
     // Anti-bot: campo trampa + envío demasiado rápido
-    if (honeypot.trim() !== '') return;
-    if (Date.now() - mountedAt.current < 2500) {
+    if (isHoneypotTripped(honeypot)) return;
+    if (isSubmissionTooFast(mountedAt.current)) {
       setServerError('Espera un momento antes de enviar el formulario.');
       return;
     }

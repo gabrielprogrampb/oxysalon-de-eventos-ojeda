@@ -1,26 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SPACES, TESTIMONIALS } from '../constants';
 import Carousel from '../components/Carousel';
 import { AnimateOnScroll } from '../hooks/useScrollAnimation';
-
-const SOCIAL_ICONS = [
-  {
-    name: 'Instagram',
-    path: 'https://instagram.com',
-    svg: <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1,1 0 0,1 19,6A1,1 0 0,1 18,7A1,1 0 0,1 17,6A1,1 0 0,1 18,5Z" />
-  },
-  {
-    name: 'Facebook',
-    path: 'https://facebook.com',
-    svg: <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-  },
-  {
-    name: 'TikTok',
-    path: 'https://tiktok.com',
-    svg: <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 1 0 7.75 6.82V9.17a7.18 7.18 0 0 0 4.12 1.87V7.55c-1.05-.12-2.07-.67-2.64-1.73Z" />
-  }
-];
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -39,9 +21,12 @@ const Home: React.FC = () => {
         <div className="w-full flex items-center justify-between px-6 py-3 md:py-4">
           <div className="w-[88px] hidden md:block"></div>
 
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-center flex-1 text-white cursor-pointer hover:text-gold transition-colors" onClick={() => navigate('/')}>
+          <Link
+            to="/"
+            className="text-xl md:text-2xl font-bold tracking-tight text-center flex-1 text-white hover:text-gold transition-colors focus-ring rounded-lg"
+          >
             OXYSALON <span className="text-gold font-light hidden sm:inline">DE EVENTOS</span>
-          </h2>
+          </Link>
 
           <div className="flex justify-end w-[88px]">
             <button
@@ -99,7 +84,7 @@ const Home: React.FC = () => {
             <AnimateOnScroll animation="slide-up">
               <div className="px-4 md:px-6 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-white">Nuestros Espacios</h3>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">Nuestros Espacios</h2>
                 </div>
                 <button onClick={() => navigate('/spaces')} className="text-gold text-sm font-bold uppercase tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
                   Explorar todo <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -124,7 +109,7 @@ const Home: React.FC = () => {
                     </div>
 
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                      <h4 className="text-white text-2xl md:text-3xl font-bold mb-2 leading-none">{space.name}</h4>
+                      <h3 className="text-white text-2xl md:text-3xl font-bold mb-2 leading-none">{space.name}</h3>
                       <p className="text-gray-300 text-sm mb-4 flex items-center gap-2">
                         <span className="material-symbols-outlined text-gold text-sm">square_foot</span> {space.sqft} ft²
                         <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
@@ -148,7 +133,7 @@ const Home: React.FC = () => {
               <AnimateOnScroll animation="slide-left">
                 <div>
                   <span className="text-gold text-xs font-bold uppercase tracking-widest mb-3 block">Servicios Integrales</span>
-                  <h3 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Todo lo que necesitas <br />para brillar.</h3>
+                  <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Todo lo que necesitas <br />para brillar.</h2>
                   <p className="text-gray-400 text-lg leading-relaxed mb-8">
                     No solo alquilamos espacios. Proveemos una plataforma completa de servicios de lujo para asegurar que tu evento sea impecable de principio a fin.
                   </p>
@@ -207,7 +192,7 @@ const Home: React.FC = () => {
           <AnimateOnScroll animation="slide-up">
             <div className="max-w-7xl mx-auto px-6 mb-12 flex flex-col items-center text-center">
               <span className="material-symbols-outlined text-gold text-5xl mb-4 opacity-50">format_quote</span>
-              <h3 className="text-white text-3xl md:text-4xl font-extrabold mb-4">Lo que dicen nuestros clientes</h3>
+              <h2 className="text-white text-3xl md:text-4xl font-extrabold mb-4">Lo que dicen nuestros clientes</h2>
               <p className="text-gray-400 max-w-xl">La satisfacción de quienes confían en nosotros es nuestra mayor credencial.</p>
             </div>
           </AnimateOnScroll>

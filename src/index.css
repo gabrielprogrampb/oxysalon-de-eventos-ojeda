@@ -191,3 +191,107 @@
     background-attachment: scroll;
   }
 }
+
+/* ==========================================================================
+   DESIGN SYSTEM — Consola administrativa
+   Tokens semánticos. El tema se controla con data-theme en <html>.
+   Oscuro es el valor por defecto (coincide con el sitio público).
+   Contraste verificado ≥ 4.5:1 para texto normal en ambos temas.
+   ========================================================================== */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: 15 11 24;
+  --surface: 24 19 36;
+  --elevated: 33 26 48;
+  --line: 52 43 70;
+  --fg: 240 236 249;
+  --muted: 163 154 184;
+  --accent: 139 92 246;
+  --ok: 52 199 123;
+  --warn: 245 165 36;
+  --danger: 244 89 94;
+  --grid: 255 255 255;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: 247 245 251;
+  --surface: 255 255 255;
+  --elevated: 250 248 255;
+  --line: 226 220 238;
+  --fg: 23 18 37;
+  --muted: 92 84 112;
+  --accent: 91 19 236;
+  --ok: 16 145 88;
+  --warn: 176 106 6;
+  --danger: 197 42 48;
+  --grid: 0 0 0;
+}
+
+@layer base {
+  /* El panel respeta el tema; el sitio público mantiene su fondo oscuro fijo. */
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+  }
+
+  /* Cifras tabulares: evita el "baile" de columnas en tablas y KPIs */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-line bg-surface shadow-panel;
+  }
+
+  .panel-header {
+    @apply flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4;
+  }
+
+  .panel-title {
+    @apply text-sm font-semibold tracking-tight text-fg;
+  }
+
+  .panel-sub {
+    @apply text-2xs text-muted;
+  }
+
+  /* Enlace de salto: visible solo con teclado (WCAG 2.4.1) */
+  .skip-link {
+    @apply pointer-events-none fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white opacity-0 transition;
+  }
+
+  .skip-link:focus-visible {
+    @apply pointer-events-auto translate-y-0 opacity-100;
+  }
+
+  /* Foco de teclado consistente en toda la consola (WCAG 2.4.11) */
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+
+  .divider {
+    @apply h-px w-full bg-line;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-md bg-elevated;
+  }
+}
+
+/* Scrollbar discreto del panel */
+[data-scrollarea]::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-scrollarea]::-webkit-scrollbar-thumb {
+  background: rgb(var(--line));
+  border-radius: 8px;
+}
+

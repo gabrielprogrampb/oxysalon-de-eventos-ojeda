@@ -1,5 +1,9 @@
 # Mantenimiento — base de datos y almacenamiento
 
+> ¿Te preocupa que la base de datos se llene? Los números reales, por qué Google Drive no
+> sirve como base y qué hacer si algún día crece están en
+> **[`LIMITES-Y-RESPALDOS.md`](LIMITES-Y-RESPALDOS.md)**.
+
 El plan gratuito de Supabase **no es infinito** y **no incluye respaldos automáticos**.
 Este documento es el runbook: qué se llena, cuándo, y qué hacer.
 

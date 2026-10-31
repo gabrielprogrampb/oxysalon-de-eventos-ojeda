@@ -20,9 +20,13 @@ se convierte en el premio, no en el regalo.
 
 ### Las 3 capturas exactas que debes enviar
 
-1. **Portada (Home) en escritorio** — la que ya tienes: se ve el salón, el título grande y el botón “Reserva tu fecha”. Es la que genera el “wow”.
-2. **Galería en móvil** — demuestra que se ve bien en teléfono, que es donde el 90 % de sus clientes va a entrar.
-3. **Panel administrativo (Dashboard)** — la que cierra la venta: “esto lo manejas tú, sin depender de nadie”. Aquí el dueño entiende que no es una página bonita, es una herramienta.
+1. **`01-home-portada.jpg`** — la portada: se ve el salón, el título grande y el botón de reserva. Es la que genera el “wow”.
+2. **`12-galeria-lightbox.jpg`** — el carrusel abierto, con el contador `1/3`, flechas, puntos y la descripción de la foto. **Esta es la que demuestra que hay trabajo real detrás**, no una plantilla.
+3. **`28-movil-galeria.jpg`** — la galería en teléfono: donde entra el 90 % de sus clientes.
+4. **`18-panel-resumen.jpg`** — el panel. Esta cierra la venta: “esto lo manejas tú, sin depender de nadie”.
+
+Si quieres mandar solo tres, manda la 1, la 2 y la 4. La del móvil guárdala para cuando
+pregunte “¿y se verá bien en el celular?”.
 
 **Bonus si quieres subir el nivel:** un video de 30–40 segundos grabando la pantalla
 (portada → galería → agenda → buzón). Un video se ve más que tres fotos juntas y demuestra
@@ -44,6 +48,8 @@ feo. Sácalas en escritorio a 1440 px de ancho y una en móvil.
 > La idea es sencilla: que las personas que ya quieren celebrar algo lleguen, vean su salón y te dejen los datos en un formulario. Tú entras desde el teléfono y ves todo lo que entró, con la fecha, el tipo de evento y cuántos invitados, y marcas si ya lo contactaste, si lo cotizaste o si quedó reservado.
 >
 > También tiene agenda: tú bloqueas las fechas ocupadas y el cliente ve de una qué días están libres. Se acaban los “¿tienes disponible el 15?”.
+>
+> Y la galería la organizas por temas —bodas, 15 años, corporativo— y cada tema lleva su propio carrusel, con el título y la descripción de cada foto. Así muestras el montaje completo de un evento, no una foto suelta.
 >
 > Si te gusta la idea, te muestro cómo funciona en 10 minutos y vemos qué le falta para que sea la cara del salón. ¿Te queda bien esta semana?
 
@@ -104,6 +110,9 @@ Un solo seguimiento. Si no responde, se cierra el ciclo y se retoma en 3 semanas
 
 ## 7. Objeciones probables y respuesta corta
 
+> Las respuestas con precio concreto ("¿cuánto cuesta?", "está caro", "mi sobrino lo hace gratis")
+> están en **[`PRECIOS-Y-CIERRE.md`](PRECIOS-Y-CIERRE.md)**.
+
 | Objeción | Respuesta |
 |----------|-----------|
 | “Ya tengo Instagram” | “Instagram está bien para mostrar; el problema es que ahí no sabes quién está libre el 15 ni cuántos invitados quiere. La web sí te lo dice, y el que entra ya viene con intención de reservar.” |
@@ -115,10 +124,9 @@ Un solo seguimiento. Si no responde, se cierra el ciclo y se retoma en 3 semanas
 
 ## 8. Antes de enviar el mensaje
 
-> **Ya tienes las capturas listas** en `docs/capturas/` (JPG optimizados, 100–145 KB cada uno,
-> tomados del build de producción). Las tres que recomiendo enviar:
-> `01-portada-escritorio.jpg`, `06-galeria-movil.jpg` y `04-panel-escritorio.jpg`.
-> Las demás están ahí por si quieres reemplazar alguna.
+> **Ya tienes las capturas regeneradas** en `docs/capturas/` (31 imágenes del build actual,
+> con la galería por temas y el carrusel). Las que recomiendo enviar:
+> `01-home-portada.jpg`, `12-galeria-lightbox.jpg`, `28-movil-galeria.jpg` y `18-panel-resumen.jpg`.
 
 - [ ] Completar `src/config/site.ts` con el WhatsApp y el correo **reales** (si no, el botón de
       WhatsApp no aparece en el sitio).

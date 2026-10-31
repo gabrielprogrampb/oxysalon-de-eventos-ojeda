@@ -17,8 +17,21 @@ const ImageCard: React.FC<{ item: GalleryItem, isLiked: boolean, onClick: () => 
 
   return (
     <div
-      className="relative w-full break-inside-avoid mb-3 rounded-lg overflow-hidden group cursor-zoom-in bg-gray-100 dark:bg-white/5 shadow-sm"
+      role="button"
+      tabIndex={0}
+      aria-label={
+        (item.photos?.length ?? 0) > 1
+          ? `Ver ${item.photos?.length} fotos de ${item.title || 'la galería'}`
+          : `Ver ${item.title || 'la imagen'}`
+      }
+      className="relative w-full break-inside-avoid mb-3 rounded-lg overflow-hidden group cursor-zoom-in bg-gray-100 dark:bg-white/5 shadow-sm focus-ring"
       onClick={onClick}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onClick();
+        }
+      }}
     >
       {/* Skeleton / Loading State */}
       {!isLoaded && (
@@ -47,6 +60,7 @@ const ImageCard: React.FC<{ item: GalleryItem, isLiked: boolean, onClick: () => 
           <span className="text-white text-sm font-bold tracking-wide block">{item.title}</span>
           <span className="text-gold text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
             {item.category || 'Ver detalles'}
+            {(item.photos?.length ?? 0) > 1 && ` · ${item.photos?.length} fotos`}
           </span>
         </div>
       )}
@@ -82,40 +96,151 @@ const ImageCard: React.FC<{ item: GalleryItem, isLiked: boolean, onClick: () => 
   );
 };
 
-// Lightbox Component
-const Lightbox: React.FC<{ item: GalleryItem | null, onClose: () => void }> = ({ item, onClose }) => {
+// Visor con carrusel: un tema puede tener varias fotos, cada una con su
+// propio título, descripción y enlace.
+const Lightbox: React.FC<{ item: GalleryItem | null; onClose: () => void }> = ({ item, onClose }) => {
+  const [index, setIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  if (!item) return null;
+  const photos = item?.photos?.length
+    ? item.photos
+    : item
+      ? [{ id: 0, itemId: item.id, image: item.image, title: item.title, sortOrder: 0 }]
+      : [];
+  const total = photos.length;
+
+  // Al abrir otro tema se vuelve a la primera foto.
+  useEffect(() => {
+    setIndex(0);
+    setIsZoomed(false);
+  }, [item?.id]);
+
+  // Teclado: flechas para navegar, Escape para cerrar.
+  useEffect(() => {
+    if (!item || total === 0) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key === 'ArrowRight') setIndex((i) => (i + 1) % total);
+      if (event.key === 'ArrowLeft') setIndex((i) => (i - 1 + total) % total);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [item, total, onClose]);
+
+  if (!item || total === 0) return null;
+
+  const safeIndex = Math.min(index, total - 1);
+  const photo = photos[safeIndex];
+  const go = (direction: -1 | 1) => {
+    setIsZoomed(false);
+    setIndex((i) => (i + direction + total) % total);
+  };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center animate-fade-in-up" onClick={onClose}>
-      {/* Close Button */}
+    <div
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center animate-fade-in-up"
+      role="dialog"
+      aria-modal="true"
+      aria-label={item.title ? `Galería: ${item.title}` : 'Galería de imágenes'}
+      onClick={onClose}
+    >
+      {/* Contador */}
+      {total > 1 && (
+        <div className="absolute top-6 left-6 z-50 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
+          {safeIndex + 1} / {total}
+        </div>
+      )}
+
       <button
         onClick={onClose}
+        aria-label="Cerrar"
         className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors z-50"
       >
         <span className="material-symbols-outlined text-3xl">close</span>
       </button>
 
-      {/* Image Container */}
+      {/* Flechas */}
+      {total > 1 && (
+        <>
+          <button
+            onClick={(e) => { e.stopPropagation(); go(-1); }}
+            aria-label="Foto anterior"
+            className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-50 flex size-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/25 transition"
+          >
+            <span className="material-symbols-outlined text-3xl">chevron_left</span>
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); go(1); }}
+            aria-label="Foto siguiente"
+            className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-50 flex size-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/25 transition"
+          >
+            <span className="material-symbols-outlined text-3xl">chevron_right</span>
+          </button>
+        </>
+      )}
+
+      {/* Imagen */}
       <div
-        className="relative w-full h-full p-4 flex items-center justify-center overflow-hidden"
-        onClick={(e) => { e.stopPropagation(); setIsZoomed(!isZoomed); }}
+        className="relative w-full h-full p-4 md:p-16 flex items-center justify-center overflow-hidden"
+        onClick={(e) => { e.stopPropagation(); setIsZoomed((z) => !z); }}
       >
         <img
-          src={item.image}
-          alt={item.title}
-          className={`max-w-full max-h-full object-contain transition-transform duration-300 cursor-zoom-in ${isZoomed ? 'scale-[2] cursor-zoom-out' : 'scale-100'}`}
-          style={isZoomed ? { transformOrigin: 'center center' } : {}}
+          key={photo.image}
+          src={photo.image}
+          alt={photo.alt || photo.title || item.title || 'Imagen de la galería'}
+          className={`max-w-full max-h-full object-contain transition-all duration-300 animate-fade-in-up cursor-zoom-in ${
+            isZoomed ? 'scale-[1.8] cursor-zoom-out' : 'scale-100'
+          }`}
         />
       </div>
 
-      {/* Caption */}
+      {/* Pie: título, descripción y enlace de la foto */}
       {!isZoomed && (
-        <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent pointer-events-none">
-          <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-          <p className="text-gold text-sm font-bold uppercase tracking-wider">{item.category}</p>
+        <div
+          className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-6 pb-6 pt-16"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="mx-auto max-w-3xl text-center">
+            {item.category && (
+              <p className="text-gold text-[11px] font-bold uppercase tracking-widest">{item.category}</p>
+            )}
+            <h3 className="mt-1 text-xl md:text-2xl font-bold text-white">
+              {photo.title || item.title || 'Galería'}
+            </h3>
+            {photo.description && (
+              <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-300">
+                {photo.description}
+              </p>
+            )}
+            {photo.link && (
+              <a
+                href={photo.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-bold text-black hover:bg-gold transition-colors"
+              >
+                Ver más
+                <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+              </a>
+            )}
+
+            {/* Puntos */}
+            {total > 1 && (
+              <div className="mt-4 flex justify-center gap-2">
+                {photos.map((p, i) => (
+                  <button
+                    key={p.id || p.image}
+                    onClick={() => { setIsZoomed(false); setIndex(i); }}
+                    aria-label={`Ir a la foto ${i + 1}`}
+                    aria-current={i === safeIndex}
+                    className={`h-2 rounded-full transition-all ${
+                      i === safeIndex ? 'w-6 bg-gold' : 'w-2 bg-white/40 hover:bg-white/70'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
@@ -245,7 +370,9 @@ const Gallery: React.FC = () => {
           </div>
           <div className="flex gap-4 md:gap-8 text-sm md:text-base font-medium text-gray-300 w-full md:w-auto justify-between md:justify-start">
             <div className="text-center">
-              <span className="block text-xl md:text-2xl font-bold text-white">{items.length}</span>
+              <span className="block text-xl md:text-2xl font-bold text-white">
+                {items.reduce((sum, i) => sum + (i.photos?.length || 1), 0)}
+              </span>
               <span className="text-[10px] md:text-xs uppercase tracking-wider opacity-60">Fotos</span>
             </div>
             <div className="text-center">
@@ -290,7 +417,7 @@ const Gallery: React.FC = () => {
           <div className="mx-4 md:mx-6 mt-6 mb-8 p-6 md:p-8 rounded-2xl bg-gradient-to-r from-primary to-purple-800 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div className="relative z-10 text-center md:text-left">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-1">¿Te inspiraste con lo que ves?</h3>
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-1">¿Te inspiraste con lo que ves?</h2>
               <p className="text-white/80 text-sm md:text-base">Transformamos estas ideas en tu realidad.</p>
             </div>
             <button
@@ -319,7 +446,7 @@ const Gallery: React.FC = () => {
               <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-3xl text-gray-600">image_not_supported</span>
               </div>
-              <h3 className="text-xl font-bold text-white">Sin resultados</h3>
+              <h2 className="text-xl font-bold text-white">Sin resultados</h2>
               <p className="text-gray-400 mt-2">No hay imágenes disponibles en la categoría <span className="text-gold font-bold">"{activeFilter}"</span>.</p>
               <button onClick={() => setActiveFilter('Todo')} className="mt-6 text-sm font-bold text-gold hover:underline">Ver todas las imágenes</button>
             </div>

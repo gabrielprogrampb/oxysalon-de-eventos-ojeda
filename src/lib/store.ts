@@ -9,10 +9,12 @@
  */
 import { supabase, isSupabaseConfigured } from './supabase';
 import { optimizeImage } from './image';
+import { getSessionId } from './client-id';
 import { GALLERY_ITEMS, INQUIRIES, MOCK_TRANSACTIONS } from '../../constants';
 import type {
   CalendarEvent,
   GalleryItem,
+  GalleryPhoto,
   Inquiry,
   InquiryInput,
   InquiryStatus,
@@ -235,10 +237,46 @@ export async function deleteInquiry(id: number): Promise<void> {
 }
 
 // -----------------------------------------------------------------------------
-// GALERÍA
+// GALERÍA — temas con varias fotos
 // -----------------------------------------------------------------------------
+const mapPhoto = (r: Row): GalleryPhoto => ({
+  id: Number(r.id),
+  itemId: Number(r.item_id),
+  image: String(r.image_url ?? ''),
+  title: (r.title as string) ?? undefined,
+  description: (r.description as string) ?? undefined,
+  alt: (r.alt as string) ?? undefined,
+  link: (r.link as string) ?? undefined,
+  sortOrder: Number(r.sort_order ?? 0),
+});
+
+/** Si el tema no tiene fotos propias, se usa su imagen principal. */
+function legacyPhotos(item: GalleryItem): GalleryPhoto[] {
+  if (!item.image) return [];
+  return [
+    {
+      id: 0,
+      itemId: item.id,
+      image: item.image,
+      title: item.title,
+      alt: item.title,
+      sortOrder: 0,
+    },
+  ];
+}
+
+function attachPhotos(item: GalleryItem, photos: GalleryPhoto[]): GalleryItem {
+  const own = photos
+    .filter((p) => p.itemId === item.id)
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.id - b.id);
+  return { ...item, photos: own.length > 0 ? own : legacyPhotos(item) };
+}
+
 export async function listGallery(publicOnly = false): Promise<GalleryItem[]> {
-  if (!supabase) return readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
+  if (!supabase) {
+    const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
+    return items.map((i) => ({ ...i, photos: i.photos?.length ? i.photos : legacyPhotos(i) }));
+  }
 
   let query = supabase.from('gallery_items').select('*').order('sort_order', { ascending: true });
   if (publicOnly) query = query.eq('published', true);
@@ -247,58 +285,143 @@ export async function listGallery(publicOnly = false): Promise<GalleryItem[]> {
   if (error) fail('listar galería', error);
   const items = (data ?? []).map(mapGallery);
 
-  // En el panel se muestra la realidad (si está vacío, está vacío).
-  if (!publicOnly) return items;
+  let photos: GalleryPhoto[] = [];
+  if (items.length > 0) {
+    const { data: photoRows, error: photoError } = await supabase
+      .from('gallery_photos')
+      .select('*')
+      .in('item_id', items.map((i) => i.id))
+      .order('sort_order', { ascending: true });
 
-  // En el sitio público, si aún no hay fotos subidas se muestra el contenido base.
-  return items.length > 0 ? items : GALLERY_ITEMS;
+    if (photoError) {
+      // La migración 0004 puede no estar aplicada todavía: la galería sigue
+      // funcionando con la imagen principal de cada tema.
+      console.warn('[api] no se pudieron leer las fotos de la galería:', photoError.message);
+    } else {
+      photos = (photoRows ?? []).map(mapPhoto);
+    }
+  }
+
+  const withPhotos = items.map((i) => attachPhotos(i, photos));
+
+  // En el panel se muestra la realidad (si está vacío, está vacío).
+  if (!publicOnly) return withPhotos;
+
+  // En el sitio público, sin fotos subidas se muestra el contenido base.
+  return withPhotos.length > 0 ? withPhotos : GALLERY_ITEMS.map((i) => ({ ...i, photos: legacyPhotos(i) }));
 }
 
 export async function getGalleryItem(id: number): Promise<GalleryItem | null> {
   if (!supabase) {
     const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
-    return items.find((i) => i.id === id) ?? null;
+    const found = items.find((i) => i.id === id);
+    return found ? { ...found, photos: found.photos?.length ? found.photos : legacyPhotos(found) } : null;
   }
+
   const { data, error } = await supabase.from('gallery_items').select('*').eq('id', id).maybeSingle();
-  if (error) fail('obtener imagen', error);
-  return data ? mapGallery(data as Row) : null;
+  if (error) fail('obtener tema', error);
+  if (!data) return null;
+
+  const item = mapGallery(data as Row);
+  const { data: photoRows, error: photoError } = await supabase
+    .from('gallery_photos')
+    .select('*')
+    .eq('item_id', id)
+    .order('sort_order', { ascending: true });
+
+  if (photoError) {
+    console.warn('[api] no se pudieron leer las fotos del tema:', photoError.message);
+    return attachPhotos(item, []);
+  }
+  return attachPhotos(item, (photoRows ?? []).map(mapPhoto));
 }
 
-export async function createGalleryItem(item: {
+export interface GalleryPhotoInput {
+  image: string;
+  title?: string;
+  description?: string;
+  alt?: string;
+  link?: string;
+}
+
+export interface GalleryItemInput {
   image: string;
   title?: string;
   category?: string;
   type: GalleryItem['type'];
   featured?: boolean;
   published?: boolean;
-}): Promise<void> {
+}
+
+/**
+ * Crea un tema. `photos` es la lista completa de fotos; si viene vacía se usa
+ * `item.image` como única foto.
+ * Devuelve el id del tema creado.
+ */
+export async function createGalleryItem(
+  item: GalleryItemInput,
+  photos: GalleryPhotoInput[] = []
+): Promise<number> {
+  const allPhotos = photos.length > 0 ? photos : [{ image: item.image, title: item.title }];
+
   if (!supabase) {
     const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
-    writeLS(LS.gallery, [
-      {
-        id: nextId(items),
-        image: item.image,
-        title: item.title,
-        category: item.category,
-        type: item.type,
-        likes: 0,
-        featured: item.featured ?? false,
-        published: item.published ?? true,
-        createdAt: new Date().toISOString(),
-      },
-      ...items,
-    ]);
-    return;
+    const id = nextId(items);
+    const created: GalleryItem = {
+      id,
+      image: allPhotos[0]?.image ?? item.image,
+      title: item.title,
+      category: item.category,
+      type: item.type,
+      likes: 0,
+      featured: item.featured ?? false,
+      published: item.published ?? true,
+      createdAt: new Date().toISOString(),
+      photos: allPhotos.map((p, index) => ({
+        id: id * 1000 + index,
+        itemId: id,
+        sortOrder: index,
+        ...p,
+      })),
+    };
+    writeLS(LS.gallery, [created, ...items]);
+    return id;
   }
-  const { error } = await supabase.from('gallery_items').insert({
-    image_url: item.image,
-    title: item.title ?? null,
-    category: item.category ?? null,
-    type: item.type,
-    featured: item.featured ?? false,
-    published: item.published ?? true,
-  });
-  if (error) fail('crear imagen', error);
+
+  const { data, error } = await supabase
+    .from('gallery_items')
+    .insert({
+      image_url: allPhotos[0]?.image ?? item.image,
+      title: item.title ?? null,
+      category: item.category ?? null,
+      type: item.type,
+      featured: item.featured ?? false,
+      published: item.published ?? true,
+    })
+    .select('id')
+    .single();
+
+  if (error) fail('crear tema', error);
+  const itemId = Number(data?.id ?? 0);
+  if (!itemId) return 0;
+
+  if (allPhotos.length > 0) {
+    const rows = allPhotos.map((p, index) => ({
+      item_id: itemId,
+      image_url: p.image,
+      title: p.title ?? null,
+      description: p.description ?? null,
+      alt: p.alt ?? null,
+      link: p.link ?? null,
+      sort_order: index,
+    }));
+    const { error: photoError } = await supabase.from('gallery_photos').insert(rows);
+    if (photoError) {
+      console.warn('[api] el tema se creó pero las fotos no se guardaron:', photoError.message);
+    }
+  }
+
+  return itemId;
 }
 
 export async function updateGalleryItem(id: number, patch: Partial<GalleryItem>): Promise<void> {
@@ -319,7 +442,140 @@ export async function updateGalleryItem(id: number, patch: Partial<GalleryItem>)
   if (patch.published !== undefined) dbPatch.published = patch.published;
 
   const { error } = await supabase.from('gallery_items').update(dbPatch).eq('id', id);
-  if (error) fail('actualizar imagen', error);
+  if (error) fail('actualizar tema', error);
+}
+
+/** Agrega una foto a un tema existente. Devuelve el id de la foto creada. */
+export async function createGalleryPhoto(itemId: number, photo: GalleryPhotoInput): Promise<number> {
+  if (!supabase) {
+    const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
+    writeLS(
+      LS.gallery,
+      items.map((i) => {
+        if (i.id !== itemId) return i;
+        const photos = i.photos?.length ? i.photos : legacyPhotos(i);
+        const nextOrder = photos.reduce((max, p) => Math.max(max, p.sortOrder), -1) + 1;
+        return {
+          ...i,
+          photos: [...photos, { id: Date.now(), itemId, sortOrder: nextOrder, ...photo }],
+        };
+      })
+    );
+    return Date.now();
+  }
+
+  const { data: last } = await supabase
+    .from('gallery_photos')
+    .select('sort_order')
+    .eq('item_id', itemId)
+    .order('sort_order', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const nextOrder = Number(last?.sort_order ?? -1) + 1;
+
+  const { data, error } = await supabase
+    .from('gallery_photos')
+    .insert({
+      item_id: itemId,
+      image_url: photo.image,
+      title: photo.title ?? null,
+      description: photo.description ?? null,
+      alt: photo.alt ?? null,
+      link: photo.link ?? null,
+      sort_order: nextOrder,
+    })
+    .select('id')
+    .single();
+
+  if (error) fail('agregar foto', error);
+  return Number(data?.id ?? 0);
+}
+
+/** Edita los datos de una foto (título, descripción, alt, enlace). */
+export async function updateGalleryPhoto(id: number, patch: Partial<GalleryPhoto>): Promise<void> {
+  if (!supabase) {
+    const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
+    writeLS(
+      LS.gallery,
+      items.map((i) => ({
+        ...i,
+        photos: i.photos?.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+      }))
+    );
+    return;
+  }
+
+  const dbPatch: Row = {};
+  if (patch.title !== undefined) dbPatch.title = patch.title || null;
+  if (patch.description !== undefined) dbPatch.description = patch.description || null;
+  if (patch.alt !== undefined) dbPatch.alt = patch.alt || null;
+  if (patch.link !== undefined) dbPatch.link = patch.link || null;
+  if (patch.sortOrder !== undefined) dbPatch.sort_order = patch.sortOrder;
+
+  const { error } = await supabase.from('gallery_photos').update(dbPatch).eq('id', id);
+  if (error) fail('actualizar foto', error);
+}
+
+/** Elimina una foto y su archivo del almacenamiento. */
+export async function deleteGalleryPhoto(id: number): Promise<void> {
+  if (!supabase) {
+    const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
+    writeLS(
+      LS.gallery,
+      items.map((i) => ({ ...i, photos: i.photos?.filter((p) => p.id !== id) }))
+    );
+    return;
+  }
+
+  const { data: row } = await supabase
+    .from('gallery_photos')
+    .select('image_url')
+    .eq('id', id)
+    .maybeSingle();
+
+  const { error } = await supabase.from('gallery_photos').delete().eq('id', id);
+  if (error) fail('eliminar foto', error);
+
+  const storagePath = row?.image_url ? storagePathFromUrl(String(row.image_url)) : null;
+  if (storagePath) {
+    const { error: storageError } = await supabase.storage.from('gallery').remove([storagePath]);
+    if (storageError) {
+      console.warn('[api] no se pudo borrar el archivo de Storage:', storageError.message);
+    }
+  }
+}
+
+/** Guarda el orden de las fotos de un tema. */
+export async function reorderGalleryPhotos(itemId: number, orderedIds: number[]): Promise<void> {
+  if (!supabase) {
+    const items = readLS<GalleryItem[]>(LS.gallery, GALLERY_ITEMS);
+    writeLS(
+      LS.gallery,
+      items.map((i) =>
+        i.id === itemId
+          ? {
+              ...i,
+              photos: orderedIds
+                .map((id, index) => {
+                  const photo = i.photos?.find((p) => p.id === id);
+                  return photo ? { ...photo, sortOrder: index } : null;
+                })
+                .filter((p): p is GalleryPhoto => p !== null),
+            }
+          : i
+      )
+    );
+    return;
+  }
+
+  // Actualizaciones en paralelo: son pocas filas y evita una RPC extra.
+  const client = supabase;
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      client.from('gallery_photos').update({ sort_order: index }).eq('id', id)
+    )
+  );
 }
 
 export async function deleteGalleryItem(id: number): Promise<void> {
@@ -332,24 +588,31 @@ export async function deleteGalleryItem(id: number): Promise<void> {
     return;
   }
 
-  // Se borra también el archivo de Storage: si solo se borra la fila, los
-  // archivos quedan huérfanos y consumen cuota para siempre.
+  // Se recogen todas las URLs (imagen principal + fotos) para borrar también
+  // los archivos: si solo se borran las filas, quedan huérfanos consumiendo cuota.
   const { data: row } = await supabase
     .from('gallery_items')
     .select('image_url')
     .eq('id', id)
     .maybeSingle();
 
-  const storagePath = row?.image_url ? storagePathFromUrl(String(row.image_url)) : null;
+  const { data: photoRows } = await supabase
+    .from('gallery_photos')
+    .select('image_url')
+    .eq('item_id', id);
 
+  const paths = [row?.image_url, ...(photoRows ?? []).map((p) => p.image_url)]
+    .map((u) => (u ? storagePathFromUrl(String(u)) : null))
+    .filter((p): p is string => Boolean(p));
+
+  // Las fotos se borran en cascada por la clave foránea.
   const { error } = await supabase.from('gallery_items').delete().eq('id', id);
-  if (error) fail('eliminar imagen', error);
+  if (error) fail('eliminar tema', error);
 
-  if (storagePath) {
-    const { error: storageError } = await supabase.storage.from('gallery').remove([storagePath]);
+  if (paths.length > 0) {
+    const { error: storageError } = await supabase.storage.from('gallery').remove(paths);
     if (storageError) {
-      // No se interrumpe: la fila ya no existe y el archivo se puede limpiar después.
-      console.warn('[api] no se pudo borrar el archivo de Storage:', storageError.message);
+      console.warn('[api] no se pudieron borrar algunos archivos de Storage:', storageError.message);
     }
   }
 }
@@ -366,7 +629,11 @@ export async function likeGalleryItem(id: number): Promise<number> {
     writeLS(LS.gallery, next);
     return likes;
   }
-  const { data, error } = await supabase.rpc('like_gallery_item', { item_id: id });
+  // El voto se deduplica por sesión en el servidor (0003_console.sql)
+  const { data, error } = await supabase.rpc('like_gallery_item', {
+    p_item_id: id,
+    p_session: getSessionId(),
+  });
   if (error) fail('registrar me gusta', error);
   return Number(data ?? 0);
 }
@@ -555,8 +822,9 @@ export async function recordPageView(path: string): Promise<void> {
     writeLS(LS.views, total);
     return;
   }
+  // La función deduplica por sesión + hora y descarta rutas inválidas.
   // Se ignora el error: una visita perdida nunca debe romper la página.
-  await supabase.from('page_views').insert({ path: path.slice(0, 200) });
+  await supabase.rpc('track_page_view', { p_path: path.slice(0, 200), p_session: getSessionId() });
 }
 
 export async function getVisitCount(): Promise<number> {

@@ -25,6 +25,7 @@ const ResetPassword: React.FC = () => {
 
     // El enlace puede traer la sesión en el hash (#access_token=...) o en ?code=
     const init = async () => {
+      if (!supabase) return;
       const { data } = await supabase.auth.getSession();
       if (active) setReady(Boolean(data.session));
     };

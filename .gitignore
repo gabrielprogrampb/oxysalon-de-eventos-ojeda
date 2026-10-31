@@ -16,6 +16,7 @@ dist-ssr
 .env
 .env.*
 !.env.example
+!.env.test
 
 # Editor
 .vscode/*
@@ -38,3 +39,15 @@ public/images/oxy/tmp
 
 # Respaldos locales de la base de datos
 backups/
+
+# Pruebas end-to-end (Playwright)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Pruebas end-to-end (Playwright)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

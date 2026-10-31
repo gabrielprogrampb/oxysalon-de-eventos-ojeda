@@ -18,6 +18,24 @@ export interface Space {
 
 export type GalleryType = 'wide' | 'tall' | 'square';
 
+/**
+ * Una foto dentro de un tema de la galería.
+ * Cada foto lleva su propio título, descripción, texto alternativo y enlace,
+ * porque dentro de un mismo tema las imágenes cuentan cosas distintas.
+ */
+export interface GalleryPhoto {
+  id: number;
+  itemId: number;
+  image: string;
+  title?: string;
+  description?: string;
+  /** Texto alternativo para lectores de pantalla y SEO. */
+  alt?: string;
+  /** Enlace opcional al pulsar la foto. */
+  link?: string;
+  sortOrder: number;
+}
+
 export interface GalleryItem {
   id: number;
   createdAt?: string;
@@ -28,6 +46,8 @@ export interface GalleryItem {
   likes: number;
   featured?: boolean;
   published?: boolean;
+  /** Fotos del tema, en orden. Si viene vacío se usa `image`. */
+  photos?: GalleryPhoto[];
 }
 
 export type InquiryStatus = 'new' | 'contacted' | 'quoted' | 'booked' | 'lost';

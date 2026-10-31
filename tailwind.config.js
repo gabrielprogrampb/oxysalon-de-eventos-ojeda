@@ -22,6 +22,25 @@ export default {
         'surface-light': '#FFFFFF',
         'card-dark': '#1f1b2e',
         'card-light': '#ffffff',
+
+        // --- Design system del panel (tokens semánticos, ver src/index.css) ---
+        bg: 'rgb(var(--bg) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        elevated: 'rgb(var(--elevated) / <alpha-value>)',
+        line: 'rgb(var(--line) / <alpha-value>)',
+        fg: 'rgb(var(--fg) / <alpha-value>)',
+        muted: 'rgb(var(--muted) / <alpha-value>)',
+        accent: 'rgb(var(--accent) / <alpha-value>)',
+        ok: 'rgb(var(--ok) / <alpha-value>)',
+        warn: 'rgb(var(--warn) / <alpha-value>)',
+        danger: 'rgb(var(--danger) / <alpha-value>)',
+      },
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }],
+      },
+      boxShadow: {
+        panel: '0 1px 2px rgb(0 0 0 / 0.24), 0 12px 32px -12px rgb(0 0 0 / 0.45)',
+        pop: '0 24px 64px -16px rgb(0 0 0 / 0.55)',
       },
       fontFamily: {
         display: ['Manrope', 'system-ui', 'sans-serif'],
