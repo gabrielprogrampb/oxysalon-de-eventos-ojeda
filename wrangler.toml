@@ -1,0 +1,16 @@
+# Configuración de Cloudflare Pages
+#
+# `pages_build_output_dir` le dice a Cloudflare qué carpeta publicar.
+# Sin esto, si el panel no tiene configurado el directorio de salida,
+# Cloudflare sube el repositorio completo (código fuente) en vez del sitio
+# compilado, y la página queda en blanco aunque el despliegue diga "success".
+#
+# El comando de build NO se puede poner aquí: se configura en el panel,
+# en Settings → Build configuration:
+#
+#   Build command:          npm run build
+#   Build output directory: dist
+#
+name = "oxysalon-de-eventos-ojeda"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-31"
