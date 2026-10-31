@@ -64,6 +64,8 @@ export interface Inquiry {
   eventDate?: string | null;
   guestsRange?: string | null;
   spaceInterest?: string | null;
+  /** Sede del evento: Cabimas, Ojeda o Maracaibo. */
+  venue?: string | null;
   message?: string | null;
   status: InquiryStatus;
   value?: number | null;
@@ -82,6 +84,7 @@ export interface InquiryInput {
   eventDate?: string;
   guestsRange?: string;
   spaceInterest?: string;
+  venue?: string;
   message?: string;
 }
 

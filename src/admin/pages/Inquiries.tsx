@@ -150,6 +150,7 @@ export const Inquiries: React.FC = () => {
                 <tr>
                   <Th>Cliente</Th>
                   <Th>Evento</Th>
+                  <Th>Sede</Th>
                   <Th>Fecha evento</Th>
                   <Th className="text-right">Valor</Th>
                   <Th>Estado</Th>
@@ -172,6 +173,9 @@ export const Inquiries: React.FC = () => {
                       <span className="block text-2xs text-muted">{i.email}</span>
                     </Td>
                     <Td className="text-xs text-muted">{i.eventType || '—'}</Td>
+                    <Td className="text-xs">
+                      {i.venue ? <Badge tone="accent">{i.venue}</Badge> : <span className="text-muted">—</span>}
+                    </Td>
                     <Td className="tabular text-xs">{formatDate(i.eventDate)}</Td>
                     <Td className="tabular text-right text-xs font-semibold">
                       {i.value ? formatCurrency(i.value) : '—'}
@@ -346,6 +350,7 @@ export const InquiryDetail: React.FC = () => {
               ['Instagram', i.instagram || '—'],
               ['Telegram', i.telegram || '—'],
               ['Tipo de evento', i.eventType || '—'],
+              ['Sede', i.venue || '—'],
               ['Fecha del evento', formatDate(i.eventDate)],
               ['Invitados', i.guestsRange || '—'],
               ['Espacio de interés', i.spaceInterest || '—'],

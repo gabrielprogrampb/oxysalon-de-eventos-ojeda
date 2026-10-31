@@ -64,6 +64,11 @@ const Footer: React.FC = () => {
             <p className="text-gray-400 text-sm">
               {SITE.city}, {SITE.state}
             </p>
+            {SITE.venues.length > 1 && (
+              <p className="text-gray-500 text-xs">
+                También atendemos en {SITE.venues.slice(1).join(' y ')}.
+              </p>
+            )}
             {hasPhone() && telLink() && (
               <a href={telLink()!} className="block text-gray-400 text-sm hover:text-gold transition-colors">
                 {SITE.phone}

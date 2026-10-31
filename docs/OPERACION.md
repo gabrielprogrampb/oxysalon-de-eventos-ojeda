@@ -47,6 +47,7 @@ en la nube. Es un modo de revisión, no de venta.
    - `supabase/migrations/0002_maintenance.sql`
    - `supabase/migrations/0003_console.sql`
    - `supabase/migrations/0004_profile_gallery.sql`
+   - `supabase/migrations/0005_venue.sql`
 3. Crear el usuario administrador en **Authentication → Users**.
 4. Registrar ese usuario en la tabla `admins`:
    ```sql
@@ -191,7 +192,7 @@ Para este negocio los límites son holgados, pero conviene revisar
 
 - [ ] `npm run verify` pasa (tipos, lint, pruebas, build).
 - [ ] `npm run test:e2e` pasa (flujo de cotización, panel, 404/403/500, accesibilidad).
-- [ ] Las cuatro migraciones están aplicadas en producción.
+- [ ] Las cinco migraciones están aplicadas en producción.
 - [ ] Existe al menos un usuario en `admins` y puede entrar al panel.
 - [ ] `src/config/site.ts` tiene teléfono, WhatsApp, correo y redes reales.
 - [ ] El formulario de cotización llega a la base (probar un envío real y borrarlo).

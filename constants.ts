@@ -53,6 +53,24 @@ export const SERVICE_DETAILS = {
       "/images/oxy/img-aa62b78e00a6.webp",
       "/images/oxy/img-903bf12d1b34.webp"
     ]
+  },
+  animation: {
+    title: "Animación y Entretenimiento",
+    subtitle: "La fiesta no termina cuando empieza",
+    heroImage: "/images/oxy/img-903bf12d1b34.webp",
+    description: "Un evento se recuerda por lo que pasó, no por lo que se vio. Nuestro equipo de animación llena la pista con robots, espuma, cotillón y cabina 360, y se encarga de que nadie se quede sentado. Tú disfrutas; nosotros movemos la fiesta.",
+    features: [
+      { title: "Robots LED", desc: "Shows de luces y movimiento para abrir o cerrar la fiesta." },
+      { title: "Cotillón Hora Loca", desc: "Máscaras, accesorios y percusión para el momento más ruidoso." },
+      { title: "Cañón de Espuma", desc: "Lluvia de espuma para la pista, con operador incluido." },
+      { title: "Oxy360 Photobooth", desc: "Cabina 360 con video de tu evento listo para compartir." },
+      { title: "Event Planner", desc: "Coordinación del día: proveedores, tiempos y montaje." }
+    ],
+    gallery: [
+      "/images/oxy/img-903bf12d1b34.webp",
+      "/images/oxy/img-928e542805f9.webp",
+      "/images/oxy/img-e44d09aa75df.webp"
+    ]
   }
 };
 

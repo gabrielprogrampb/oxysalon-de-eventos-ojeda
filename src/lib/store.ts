@@ -89,6 +89,7 @@ const mapInquiry = (r: Row): Inquiry => ({
   eventDate: (r.event_date as string) ?? null,
   guestsRange: (r.guests_range as string) ?? null,
   spaceInterest: (r.space_interest as string) ?? null,
+  venue: (r.venue as string) ?? null,
   message: (r.message as string) ?? null,
   status: (r.status as InquiryStatus) ?? 'new',
   value: r.value === null || r.value === undefined ? null : Number(r.value),
@@ -159,6 +160,7 @@ export async function createInquiry(input: InquiryInput): Promise<void> {
     p_guests_range: input.guestsRange?.trim() || null,
     p_space_interest: input.spaceInterest?.trim() || null,
     p_message: input.message?.trim() || null,
+    p_venue: input.venue?.trim() || null,
   });
 
   if (error) {

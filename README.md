@@ -95,6 +95,7 @@ ejecuta la integración continua en cada push.
 │   ├── migrations/0002_maintenance.sql
 │   ├── migrations/0003_console.sql   Roles, auditoría, métricas, salud
 │   ├── migrations/0004_profile_gallery.sql  Perfil editable + fotos por tema
+│   ├── migrations/0005_venue.sql     Sede del evento (tres sedes)
 │   └── functions/notify-inquiry/     Aviso por correo (opcional)
 ├── e2e/                       Pruebas end-to-end (Playwright)
 ├── .github/workflows/ci.yml   Tipos + lint + unitarias + build + E2E

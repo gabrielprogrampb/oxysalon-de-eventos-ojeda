@@ -109,6 +109,16 @@ const Services: React.FC = () => {
                   <span className="material-symbols-outlined text-2xl">local_bar</span>
                 </span>
               </div>
+
+              <div onClick={() => navigate('/services/animation')} className="group bg-gradient-to-r from-[#3d2a06] to-[#8a6b12] rounded-[2rem] p-10 flex items-center justify-between cursor-pointer hover:shadow-lg hover:shadow-gold/20 transition-all border border-gold/20 hover:-translate-y-1">
+                <div>
+                  <h3 className="text-3xl font-bold text-white">Animación y Entretenimiento</h3>
+                  <p className="text-white/80 text-base mt-2">Robots, espuma, cotillón, Oxy360 y event planner.</p>
+                </div>
+                <span className="size-14 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-outlined text-2xl">celebration</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>

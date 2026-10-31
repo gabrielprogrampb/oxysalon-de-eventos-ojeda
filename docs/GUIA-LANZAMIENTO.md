@@ -38,7 +38,7 @@ Ten a mano:
 
 ## Paso 1.2 — Crear las tablas (las 3 migraciones)
 
-Son 4 archivos SQL. Se pegan uno por uno, **en orden**. Si te saltas el orden, falla.
+Son 5 archivos SQL. Se pegan uno por uno, **en orden**. Si te saltas el orden, falla.
 
 Para cada archivo:
 
@@ -58,6 +58,7 @@ Para cada archivo:
 | 2     | `0002_maintenance.sql` | Limpieza automática de datos viejos                |
 | 3     | `0003_console.sql`     | Auditoría, métricas y roles del panel              |
 | 4     | `0004_profile_gallery.sql` | Perfil editable y varias fotos por tema        |
+| 5     | `0005_venue.sql`       | Sede del evento (Ojeda, Cabimas, Maracaibo)        |
 
 > **Punto de control:** después de cada uno debe decir **"Success. No rows returned"**.  
 > Si sale un texto en rojo con *ERROR*, **detente** y copia el mensaje completo.

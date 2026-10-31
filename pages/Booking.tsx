@@ -8,6 +8,8 @@ import { SITE, whatsappLink, hasPhone, telLink, hasEmail, mailLink, hasWhatsApp,
 
 const EVENT_TYPES = ['Boda', '15 Años', 'Corporativo', 'Cumpleaños', 'Bautizo / Primera Comunión', 'Otro'];
 const GUESTS_RANGES = ['Menos de 50', '50 - 100', '100 - 150', '150 - 250', 'Más de 250'];
+/** Sedes reales del negocio. El orden importa: Ojeda es la sede principal. */
+const VENUES = ['Ojeda', 'Cabimas', 'Maracaibo'];
 
 interface FormState {
   name: string;
@@ -19,6 +21,7 @@ interface FormState {
   eventDate: string;
   guestsRange: string;
   spaceInterest: string;
+  venue: string;
   message: string;
   consent: boolean;
 }
@@ -33,6 +36,7 @@ const EMPTY_FORM: FormState = {
   eventDate: '',
   guestsRange: '50 - 100',
   spaceInterest: '',
+  venue: 'Ojeda',
   message: '',
   consent: false,
 };
@@ -107,6 +111,7 @@ const Booking: React.FC = () => {
         eventDate: form.eventDate || undefined,
         guestsRange: form.guestsRange,
         spaceInterest: form.spaceInterest || undefined,
+        venue: form.venue,
         message: form.message || undefined,
       });
       setSubmitted(true);
@@ -377,6 +382,27 @@ const Booking: React.FC = () => {
                         className={`${inputClass('eventDate')} [color-scheme:dark]`}
                       />
                       {errors.eventDate && <p className="text-red-400 text-xs mt-1.5">{errors.eventDate}</p>}
+                    </div>
+
+                    <div className="group">
+                      <label htmlFor="venue" className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">
+                        Sede del evento
+                      </label>
+                      <select
+                        id="venue"
+                        value={form.venue}
+                        onChange={(e) => setField('venue', e.target.value)}
+                        className={`${inputClass('venue')} appearance-none cursor-pointer`}
+                      >
+                        {VENUES.map((v) => (
+                          <option key={v} value={v} className="bg-background-dark">
+                            {v}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-[11px] text-gray-500 mt-1.5">
+                        Tenemos tres sedes: Ojeda, Cabimas y Maracaibo.
+                      </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

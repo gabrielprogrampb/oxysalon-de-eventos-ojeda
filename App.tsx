@@ -108,6 +108,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/services/decor" element={<PublicShell><ServiceDetail type="decor" /></PublicShell>} />
           <Route path="/services/tech" element={<PublicShell><ServiceDetail type="tech" /></PublicShell>} />
           <Route path="/services/bar" element={<PublicShell><ServiceDetail type="bar" /></PublicShell>} />
+          <Route path="/services/animation" element={<PublicShell><ServiceDetail type="animation" /></PublicShell>} />
           <Route path="/spaces" element={<PublicShell><Spaces /></PublicShell>} />
           <Route path="/booking" element={<PublicShell><Booking /></PublicShell>} />
           <Route path="/calendar" element={<PublicShell><CalendarPage /></PublicShell>} />

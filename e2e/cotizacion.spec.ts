@@ -48,6 +48,16 @@ test.describe('Formulario de cotización', () => {
     await expect(page.getByText(/solicitud recibida/i)).toHaveCount(0);
   });
 
+  test('permite elegir la sede del evento', async ({ page }) => {
+    await openBooking(page);
+
+    // Ojeda es la sede principal y viene preseleccionada.
+    await expect(page.locator('#venue')).toHaveValue('Ojeda');
+
+    await page.selectOption('#venue', 'Maracaibo');
+    await expect(page.locator('#venue')).toHaveValue('Maracaibo');
+  });
+
   test('envía una solicitud válida y muestra la confirmación', async ({ page }) => {
     await openBooking(page);
 

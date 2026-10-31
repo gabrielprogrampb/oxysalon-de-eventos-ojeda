@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SERVICE_DETAILS } from '../constants';
 
 interface ServiceDetailProps {
-  type: 'decor' | 'tech' | 'bar';
+  type: 'decor' | 'tech' | 'bar' | 'animation';
 }
 
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ type }) => {

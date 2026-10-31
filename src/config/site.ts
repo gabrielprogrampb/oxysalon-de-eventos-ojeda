@@ -25,6 +25,13 @@ export const SITE = {
   state: 'Zulia',
   country: 'VE',
 
+  /**
+   * Sedes donde opera el negocio. La primera es la sede física principal
+   * (la que va en la dirección y en el mapa); las demás son operativas.
+   * Se usan en el pie de página y en los datos estructurados.
+   */
+  venues: ['Ciudad Ojeda', 'Cabimas', 'Maracaibo'] as const,
+
   // --- Contacto (completar) ---
   phone: '',
   whatsapp: '',
