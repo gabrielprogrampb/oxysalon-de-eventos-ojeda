@@ -157,6 +157,22 @@ Si el salón tiene o compra un dominio:
 
 El certificado HTTPS se emite solo, sin costo, en las tres plataformas.
 
+### Cuando cambies de dominio: un solo comando
+
+El dominio aparece en el `canonical`, en las etiquetas Open Graph, en el JSON-LD, en
+`robots.txt` y en las 9 URLs del sitemap. Editarlo a mano es fácil de olvidar en alguno,
+y un `canonical` equivocado le dice a Google que la página real está en otro sitio.
+
+```bash
+npm run site:url -- https://oxysalon.com
+```
+
+Ese comando actualiza los tres archivos y guarda el dominio en `.site-url`. Después:
+`git add -A && git commit -m "dominio propio" && git push`.
+
+> El proyecto arranca apuntando a `https://oxysalon-de-eventos-ojeda.pages.dev`.
+> Si usas otro hosting, corre el comando con tu URL antes de publicar.
+
 ---
 
 ## 8. Problemas comunes

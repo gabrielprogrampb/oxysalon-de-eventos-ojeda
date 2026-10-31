@@ -18,7 +18,8 @@
     "backup": "node scripts/backup-db.mjs",
     "test:e2e": "npm run build:e2e && playwright test",
     "test:e2e:report": "playwright show-report",
-    "build:e2e": "vite build --mode test"
+    "build:e2e": "vite build --mode test",
+    "site:url": "node scripts/set-site-url.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

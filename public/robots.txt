@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /dashboard
+Disallow: /admin
 Disallow: /login
 
 # Sin rastreo de rutas privadas
-Sitemap: https://oxysalon.vercel.app/sitemap.xml
+Sitemap: https://oxysalon-de-eventos-ojeda.pages.dev/sitemap.xml
