@@ -105,10 +105,21 @@ const DEMO_GALLERY = [
 async function capture(name, { fullPage = false, hideDemoBanner = false, wait = 900 } = {}) {
   if (hideDemoBanner) {
     await page.evaluate(() => {
+      // 1. Aviso grande de "Modo demostración"
       document.querySelectorAll('div').forEach((el) => {
         if (el.textContent?.trim().startsWith('Modo demostración') && el.children.length <= 3) {
           el.remove();
         }
+      });
+
+      // 2. Chip "Modo demo" de la cabecera y el correo de la sesión de prueba.
+      //    En una captura de portafolio no deben verse: parecen un producto inacabado.
+      document.querySelectorAll('span, div, p').forEach((el) => {
+        const text = el.textContent?.trim();
+        if (!text || el.children.length > 0) return;
+
+        if (text === 'Modo demo') el.style.display = 'none';
+        if (text === 'demo@local') el.style.display = 'none';
       });
     });
   }
